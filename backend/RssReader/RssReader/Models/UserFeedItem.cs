@@ -9,4 +9,5 @@ public class UserFeedItem
     public FeedItem FeedItem { get; set; } = null!;
 
     public bool IsRead { get; set; } = false;
+    public bool IsFavorite { get; set; } = false;
 }

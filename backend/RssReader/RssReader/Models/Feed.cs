@@ -1,4 +1,4 @@
-﻿namespace RssReader.Models;
+﻿ namespace RssReader.Models;
 
 public class Feed
 {
@@ -8,8 +8,9 @@ public class Feed
     public string? Description { get; set; }
     public DateTime LastUpdated { get; set; }
     public bool IsActive { get; set; } = true;
+    public string? IconUrl { get; set; }
 
     public ICollection<FeedItem> FeedItems { get; set; } = new List<FeedItem>();
     public ICollection<UserFeed> UserFeeds { get; set; } = new List<UserFeed>();
-
+    public ICollection<FeedFolder> FeedFolders { get; set; } = new List<FeedFolder>();
 }

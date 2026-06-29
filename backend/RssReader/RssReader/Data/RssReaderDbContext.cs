@@ -10,6 +10,8 @@ public class RssReaderDbContext(DbContextOptions<RssReaderDbContext> options) : 
     public DbSet<User> Users => Set<User>();
     public DbSet<UserFeed> UserFeeds => Set<UserFeed>();
     public DbSet<UserFeedItem> UserFeedItems => Set<UserFeedItem>();
+    public DbSet<Folder> Folders => Set<Folder>();
+    public DbSet<FeedFolder> FeedFolders => Set<FeedFolder>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -53,5 +55,23 @@ public class RssReaderDbContext(DbContextOptions<RssReaderDbContext> options) : 
         modelBuilder.Entity<User>()
             .HasIndex(u => u.Email)
             .IsUnique();
+
+        modelBuilder.Entity<Folder>()
+            .HasOne(fo => fo.User)
+            .WithMany()
+            .HasForeignKey(fo => fo.UserId);
+
+        modelBuilder.Entity<FeedFolder>()
+            .HasKey(ff => new { ff.FeedId, ff.FolderId });
+
+        modelBuilder.Entity<FeedFolder>()
+            .HasOne(ff => ff.Feed)
+            .WithMany(f => f.FeedFolders)
+            .HasForeignKey(ff => ff.FeedId);
+
+        modelBuilder.Entity<FeedFolder>()
+            .HasOne(ff => ff.Folder)
+            .WithMany(fo => fo.FeedFolders)
+            .HasForeignKey(ff => ff.FolderId);
     }
 }
