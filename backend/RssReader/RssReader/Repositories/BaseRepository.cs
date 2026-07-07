@@ -4,35 +4,36 @@ using RssReader.Repositories.Interfaces;
 
 namespace RssReader.Repositories;
 
-public class BaseRepository<T>(RssReaderDbContext context) : IBaseRepository<T> where T : class
+public abstract class BaseRepository<T>(RssReaderDbContext context) : IBaseRepository<T> where T : class
 {
     private readonly DbSet<T> _dbSet = context.Set<T>();
-    public async Task<T?> GetByIdAsync(int id)
+
+    public async Task<T?> GetByIdAsync(int id, CancellationToken ct = default)
     {
-        return await _dbSet.FindAsync(id);
+        return await _dbSet.FindAsync(id, ct);
     }
 
-    public async Task<T> AddAsync(T entity)
+    public async Task<T> AddAsync(T entity, CancellationToken ct = default)
     {
-        await _dbSet.AddAsync(entity);
-        await context.SaveChangesAsync();
+        await _dbSet.AddAsync(entity, ct);
+
         return entity;
     }
 
-    public async Task UpdateAsync(T entity)
+    public Task UpdateAsync(T entity, CancellationToken ct = default)
     {
         _dbSet.Update(entity);
-        await context.SaveChangesAsync();
+
+        return Task.CompletedTask;
     }
 
-    public async Task DeleteAsync(int id)
+    public async Task DeleteAsync(int id, CancellationToken ct = default)
     {
-        var entity = await GetByIdAsync(id);
+        var entity = await GetByIdAsync(id, ct);
         if(entity is null)
         {
             throw new KeyNotFoundException($"{nameof(entity)} with id {id} was not found");
         }
         _dbSet.Remove(entity);
-        await context.SaveChangesAsync();
     }
 }

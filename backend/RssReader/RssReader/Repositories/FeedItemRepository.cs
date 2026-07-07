@@ -5,18 +5,23 @@ using RssReader.Repositories.Interfaces;
 
 namespace RssReader.Repositories;
 
-public class FeedItemRepository(RssReaderDbContext context) : BaseRepository<FeedItem>(context), IFeedItemRepository
+public class FeedItemRepository(RssReaderDbContext context) : BaseRepository<FeedItem>(context)
 {
-    public async Task AddRangeAsync(List<FeedItem> feedItems)
+    public async Task AddRangeAsync(List<FeedItem> feedItems, CancellationToken ct = default)
     {
-        await context.FeedItems.AddRangeAsync(feedItems);
-        await context.SaveChangesAsync();
+        await context.FeedItems.AddRangeAsync(feedItems, ct);
     }
 
-    public async Task<List<FeedItem>> GetAllForUserAsync(int userId, bool? isRead, bool? isFavorite, DateTime? from, DateTime? to)
+    public async Task<List<FeedItem>> GetAllForUserAsync
+        (int userId,
+        bool? isRead, 
+        bool? isFavorite, 
+        DateTime? from, 
+        DateTime? to, 
+        CancellationToken ct = default)
     {
         var query = context.UserFeedItems
-            .Where(ufi => ufi.UserId == userId)
+            .Where(ufi => ufi.UserId == userId && !ufi.IsRemoved)
             .AsQueryable();
 
         if (isRead.HasValue)
@@ -34,16 +39,20 @@ public class FeedItemRepository(RssReaderDbContext context) : BaseRepository<Fee
         return await query
             .OrderByDescending(ufi => ufi.FeedItem.PublishDate)
             .Select(ufi => ufi.FeedItem)
-            .ToListAsync();
+            .ToListAsync(ct);
     }
 
-    public async Task<List<FeedItem>> GetByFeedIdAsync(int feedId, int skip, int take)
+    public async Task<List<FeedItem>> GetByFeedIdAsync
+        (int feedId, 
+        int skip, 
+        int take, 
+        CancellationToken ct = default)
     {
         return await context.FeedItems
             .Where(fi => fi.FeedId == feedId)
             .OrderByDescending(fi => fi.PublishDate)
             .Skip(skip)
             .Take(take)
-            .ToListAsync();
+            .ToListAsync(ct);
     }
 }

@@ -10,4 +10,5 @@ public class UserFeedItem
 
     public bool IsRead { get; set; } = false;
     public bool IsFavorite { get; set; } = false;
+    public bool IsRemoved { get; set; } = false;
 }

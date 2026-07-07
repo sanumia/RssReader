@@ -7,46 +7,55 @@ namespace RssReader.Repositories;
 
 public class UserFeedItemRepository(RssReaderDbContext context) : IUserFeedItemRepository
 {
-    public async Task<UserFeedItem?> GetAsync(int userId, int feedItemId)
+    public async Task<UserFeedItem?> GetAsync(int userId, int feedItemId, CancellationToken ct = default)
     {
         return await context.UserFeedItems
-            .FirstOrDefaultAsync(ufi => ufi.UserId == userId && ufi.FeedItemId == feedItemId);
+            .FirstOrDefaultAsync(ufi => ufi.UserId == userId && ufi.FeedItemId == feedItemId, ct);
     }
 
-    public async Task<UserFeedItem> CreateAsync(int userId, int feedItemId)
+    public async Task<UserFeedItem> CreateAsync(int userId, int feedItemId, CancellationToken ct = default)
     {
         var entity = new UserFeedItem
         {
             UserId = userId,
             FeedItemId = feedItemId,
             IsRead = false,
-            IsFavorite = false
+            IsFavorite = false,
+            IsRemoved = false
         };
 
-        context.UserFeedItems.Add(entity);
-        await context.SaveChangesAsync();
+        await context.UserFeedItems.AddAsync(entity, ct);
         return entity;
+
     }
 
-    public async Task MarkAsFavoriteAsync(int userId, int feedItemId, bool isFavorite)
+    public async Task MarkAsFavoriteAsync(int userId, int feedItemId, bool isFavorite, CancellationToken ct = default)
     {
-        var feed = await GetAsync(userId, feedItemId);
-        if(feed is null)
+        var userFeedItem = await GetAsync(userId, feedItemId, ct);
+        if(userFeedItem is null)
         {
             throw new KeyNotFoundException($"{userId} doesn't have {feedItemId} feedItem");
         }
-        feed.IsFavorite = isFavorite;
-        await context.SaveChangesAsync();
+        userFeedItem.IsFavorite = isFavorite;
     }
 
-    public async Task MarkAsReadAsync(int userId, int feedItemId, bool isRead = true)
+    public async Task MarkAsReadAsync(int userId, int feedItemId, bool isRead = true, CancellationToken ct = default)
     {
-        var feed = await GetAsync(userId, feedItemId);
-        if (feed is null)
+        var userFeedItem = await GetAsync(userId, feedItemId, ct);
+        if (userFeedItem is null)
         {
             throw new KeyNotFoundException($"{userId} doesn't have {feedItemId} feedItem");
         }
-        feed.IsRead = isRead;
-        await context.SaveChangesAsync();
+        userFeedItem.IsRead = isRead;
+    }
+
+    public async Task MarkAsRemovedAsync(int userId, int feedItemId, bool isRemoved, CancellationToken ct = default)
+    {
+        var userFeedItem = await GetAsync(userId, feedItemId, ct);
+        if(userFeedItem is null)
+        {
+            throw new KeyNotFoundException($"{userId} doesn't have {feedItemId} feedItem");
+        }
+        userFeedItem.IsRemoved = isRemoved;
     }
 }

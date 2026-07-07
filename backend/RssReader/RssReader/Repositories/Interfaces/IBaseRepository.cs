@@ -2,8 +2,8 @@
 
 public interface IBaseRepository<T> where T : class
 {
-    Task<T?> GetByIdAsync(int id);
-    Task<T> AddAsync(T entity);
-    Task UpdateAsync(T entity);
-    Task DeleteAsync(int id);
+    Task<T?> GetByIdAsync(int id, CancellationToken ct = default);
+    Task<T> AddAsync(T entity, CancellationToken ct = default);
+    Task UpdateAsync(T entity, CancellationToken ct = default);
+    Task DeleteAsync(int id, CancellationToken ct = default);
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RssReader.Data;
+using RssReader.DTOs.Folder;
 using RssReader.Models;
 using RssReader.Repositories.Interfaces;
 
@@ -7,47 +8,51 @@ namespace RssReader.Repositories;
 
 public class FolderRepository(RssReaderDbContext context) : BaseRepository<Folder>(context), IFolderRepository
 {
-    public async Task<List<Folder>> GetAllByUserIdAsync(int userId)
+    public async Task<List<Folder>> GetAllByUserIdAsync(int userId, CancellationToken ct = default)
     {
         return await context.Folders
             .Where(f => f.UserId == userId)
-            .ToListAsync();
+            .ToListAsync(ct);
     }
 
-    public async Task<List<Folder>> GetFoldersWithFeedCountsAsync(int userId)
+    public async Task<List<FolderWithCountDto>> GetFoldersWithFeedCountsAsync(
+    int userId, CancellationToken ct = default)
     {
         return await context.Folders
             .Where(f => f.UserId == userId)
-            .Include(f => f.FeedFolders)
-            .ToListAsync();
+            .Select(f => new FolderWithCountDto
+            {
+                Id = f.Id,
+                Name = f.Name,
+                FeedCount = f.FeedFolders.Count
+            })
+            .ToListAsync(ct);
     }
 
-    public async Task AddFeedToFolderAsync(int feedId, int folderId)
+    public async Task AddFeedToFolderAsync(int feedId, int folderId, CancellationToken ct = default)
     {
         var alreadyAdded = await context.FeedFolders
-            .AnyAsync(ff => ff.FeedId == feedId && ff.FolderId == folderId);
+            .AnyAsync(ff => ff.FeedId == feedId && ff.FolderId == folderId, ct);
         if (alreadyAdded) return;
-        context.FeedFolders.Add(new FeedFolder { FeedId = feedId, FolderId = folderId });
-        await context.SaveChangesAsync();
+        await context.FeedFolders.AddAsync(new FeedFolder { FeedId = feedId, FolderId = folderId }, ct);
     }
 
-    public async Task RemoveFeedFromFolderAsync(int feedId, int folderId)
+    public async Task RemoveFeedFromFolderAsync(int feedId, int folderId, CancellationToken ct = default)
     {
         var feedFolder = await context.FeedFolders
-            .FirstOrDefaultAsync(ff => ff.FeedId == feedId && ff.FolderId == folderId);
+            .FirstOrDefaultAsync(ff => ff.FeedId == feedId && ff.FolderId == folderId, ct);
         if(feedFolder is null)
         {
             throw new KeyNotFoundException($"Relation between feed {feedId} and {folderId} was not found");
         }
         context.FeedFolders.Remove(feedFolder);
-        await context.SaveChangesAsync();
     }
 
-    public async Task<List<Feed>> GetFeedsInFolderAsync(int folderId)
+    public async Task<List<Feed>> GetFeedsInFolderAsync(int folderId, CancellationToken ct = default)
     {
         return await context.FeedFolders
             .Where(ff => ff.FolderId == folderId)
             .Select(ff => ff.Feed)
-            .ToListAsync();
+            .ToListAsync(ct);
     }
 }

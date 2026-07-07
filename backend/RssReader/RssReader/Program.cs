@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using RssReader.Data;
 using RssReader.Repositories;
 using RssReader.Repositories.Interfaces;
+using RssReader.Repositories.UnitOfWork;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,9 +14,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<RssReaderDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 builder.Services.AddScoped<IFolderRepository, FolderRepository>();
 builder.Services.AddScoped<IFeedRepository, FeedRepository>();
-builder.Services.AddScoped<IFeedItemRepository, FeedItemRepository>();
 builder.Services.AddScoped<IUserFeedItemRepository, UserFeedItemRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
