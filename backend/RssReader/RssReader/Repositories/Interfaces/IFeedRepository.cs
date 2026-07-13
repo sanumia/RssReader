@@ -1,4 +1,5 @@
-﻿using RssReader.Models;
+﻿using RssReader.DTOs.Feed;
+using RssReader.Models;
 
 namespace RssReader.Repositories.Interfaces;
 
@@ -11,5 +12,6 @@ public interface IFeedRepository : IBaseRepository<Feed>
     Task<bool> UserIsSubscribedAsync(int userId, int feedId, CancellationToken ct = default);
     Task SubscribeUserToFeedAsync(int userId, int feedId, CancellationToken ct = default);
     Task UnsubscribeUserFromFeedAsync(int userId, int feedId, CancellationToken ct = default);
+    Task<List<DashboardFeedDto>> GetDashboardFeedsAsync(int userId, CancellationToken ct = default);
 
 }

@@ -6,11 +6,14 @@ using RssReader.Services.Interfaces;
 
 namespace RssReader.Services;
 
-public class FeedService(IUnitOfWork unitOfWork) : IFeedService
+public class FeedService(
+    IFeedRepository feedRepository,
+    IFolderRepository folderRepository,
+    IUnitOfWork unitOfWork) : IFeedService
 {
     public async Task<ResponseFeedDto> CreateFeedAsync(int userId, CreateFeedDto createFeedDto, CancellationToken ct = default)
     {
-        var existingFeed =  await unitOfWork.Feeds.GetByUrlAsync(createFeedDto.Url, ct);
+        var existingFeed =  await feedRepository.GetByUrlAsync(createFeedDto.Url, ct);
         Feed feed;
         if(existingFeed is null)
         {
@@ -23,8 +26,8 @@ public class FeedService(IUnitOfWork unitOfWork) : IFeedService
                     IsActive = true,
                     LastUpdated = DateTime.UtcNow,
                 };
-                feed = await unitOfWork.Feeds.AddAsync(feed, ct);
-                await unitOfWork.CommitAsync(ct);
+                feed = await feedRepository.AddAsync(feed, ct);
+                await unitOfWork.SaveChangesAsync(ct);
             }
             else
             {
@@ -36,7 +39,7 @@ public class FeedService(IUnitOfWork unitOfWork) : IFeedService
             feed = existingFeed;
         }
 
-        await unitOfWork.Feeds.SubscribeUserToFeedAsync(userId, feed.Id, ct);
+        await feedRepository.SubscribeUserToFeedAsync(userId, feed.Id, ct);
         await unitOfWork.CommitAsync(ct);
 
         return new ResponseFeedDto
@@ -48,31 +51,18 @@ public class FeedService(IUnitOfWork unitOfWork) : IFeedService
         };
     }
 
-    public async Task<List<DashboardFeedDto>> GetFeedsForDashboardAsync(int userId, CancellationToken ct = default)
+    public async Task<List<DashboardFeedDto>> GetFeedsForDashboardAsync(
+    int userId, CancellationToken ct = default)
     {
-        var feeds = await unitOfWork.Feeds.GetAllByUserIdAsync(userId, ct);
-        var folders = await unitOfWork.Folders.GetFoldersWithFeedCountsAsync(userId, ct);
-
-        return feeds.Select(feed => new DashboardFeedDto
-        {
-            Id = feed.Id,
-            Url = feed.Url,
-            Title = feed.Title,
-            IconUrl = feed.IconUrl,
-            FolderNames = folders
-                .Where(f => f.FeedFolders.Any(ff => ff.FeedId == feed.Id))
-                .Select(f => f.Name)
-                .ToList(),
-            FeedItemCount = feed.FeedItems?.Count ?? 0
-        }).ToList();
+        return await feedRepository.GetDashboardFeedsAsync(userId, ct);
     }
 
     public async Task RemoveFeedAsync(int userId, int feedId, CancellationToken ct = default)
     {
-        var isSubscribe = await unitOfWork.Feeds.UserIsSubscribedAsync(userId, feedId, ct);
+        var isSubscribe = await feedRepository.UserIsSubscribedAsync(userId, feedId, ct);
         if (isSubscribe)
         {
-            await unitOfWork.Feeds.UnsubscribeUserFromFeedAsync(userId, feedId, ct);
+            await feedRepository.UnsubscribeUserFromFeedAsync(userId, feedId, ct);
             await unitOfWork.CommitAsync(ct);
         }
         else
@@ -83,7 +73,7 @@ public class FeedService(IUnitOfWork unitOfWork) : IFeedService
 
     public async Task UpdateFeedAsync(int userId, int feedId, UpdateFeedDto updateFeedDto, CancellationToken ct = default)
     {
-        var feed = await unitOfWork.Feeds.GetByIdAsync(feedId, ct)
+        var feed = await feedRepository.GetByIdAsync(feedId, ct)
             ?? throw new KeyNotFoundException($"Feed with id {feedId} was not found");
         
         if (feed.Url == updateFeedDto.Url) 
@@ -94,7 +84,7 @@ public class FeedService(IUnitOfWork unitOfWork) : IFeedService
         {
             feed.Url = updateFeedDto.Url;
             feed.LastUpdated = DateTime.UtcNow;
-            await unitOfWork.Feeds.UpdateAsync(feed, ct);
+            await feedRepository.UpdateAsync(feed, ct);
             await unitOfWork.CommitAsync(ct);
         }
         else

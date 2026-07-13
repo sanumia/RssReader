@@ -7,15 +7,15 @@ using RssReader.Services.Interfaces;
 
 namespace RssReader.Services;
 
-public class FolderService(IUnitOfWork unitOfWork) : IFolderService
+public class FolderService(IFolderRepository folderRepository, IUnitOfWork unitOfWork) : IFolderService
 {
     public async Task AddFeedToFolderAsync(int userId, int folderId, int feedId, CancellationToken ct = default)
     {
-        var folder = await unitOfWork.Folders.GetByIdAsync(folderId, ct)
+        var folder = await folderRepository.GetByIdAsync(folderId, ct)
             ?? throw new KeyNotFoundException($"Folder with id: {folderId} was not found");
         if(folder.UserId == userId)
         {
-            await unitOfWork.Folders.AddFeedToFolderAsync(feedId, folderId, ct);
+            await folderRepository.AddFeedToFolderAsync(feedId, folderId, ct);
             await unitOfWork.CommitAsync(ct);
         }
         else
@@ -24,15 +24,15 @@ public class FolderService(IUnitOfWork unitOfWork) : IFolderService
         }
     }
 
-    public async Task<ResponseFolderDto> CreateFolderAsync(int userId, CreateFolderDto createFolderDto, CancellationToken ct = default)
+    public async Task<ResponseFolderDto> CreateFolderAsync(int userId, FolderNameDto createFolderDto, CancellationToken ct = default)
     {
         if (string.IsNullOrEmpty(createFolderDto.Name))
             throw new ArgumentException("Folders name can't be empty");
-        var existingFolders = await unitOfWork.Folders.GetAllByUserIdAsync(userId, ct);
+        var existingFolders = await folderRepository.GetAllByUserIdAsync(userId, ct);
         if (existingFolders.Any(f => f.Name.Equals(createFolderDto.Name, StringComparison.OrdinalIgnoreCase)))
             throw new Exception($"Folder with name {createFolderDto.Name} already exists");
         var folder = new Folder { Name = createFolderDto.Name, UserId = userId };
-        var created = await unitOfWork.Folders.AddAsync(folder, ct);
+        var created = await folderRepository.AddAsync(folder, ct);
         await unitOfWork.CommitAsync(ct);
 
         return new ResponseFolderDto
@@ -45,12 +45,12 @@ public class FolderService(IUnitOfWork unitOfWork) : IFolderService
 
     public async Task DeleteFolderAsync(int userId, int folderId, CancellationToken ct = default)
     {
-        var folder = await unitOfWork.Folders.GetByIdAsync(folderId, ct)
+        var folder = await folderRepository.GetByIdAsync(folderId, ct)
             ?? throw new KeyNotFoundException($"Folder with id {folderId} not found");
 
         if(folder.UserId == userId)
         {
-            await unitOfWork.Folders.DeleteAsync(folderId, ct);
+            await folderRepository.DeleteAsync(folderId, ct);
             await unitOfWork.CommitAsync(ct);
         }
         else
@@ -63,7 +63,7 @@ public class FolderService(IUnitOfWork unitOfWork) : IFolderService
     public async Task<List<ResponseFolderDto>> GetFoldersWithFeedCountsAsync(
     int userId, CancellationToken ct = default)
     {
-        var folders = await unitOfWork.Folders.GetFoldersWithFeedCountsAsync(userId, ct);
+        var folders = await folderRepository.GetFoldersWithFeedCountsAsync(userId, ct);
 
         return folders.Select(f => new ResponseFolderDto
         {
@@ -75,12 +75,12 @@ public class FolderService(IUnitOfWork unitOfWork) : IFolderService
 
     public async Task RemoveFeedFromFolderAsync(int userId, int folderId, int feedId, CancellationToken ct = default)
     {
-        var folder = await unitOfWork.Folders.GetByIdAsync(folderId, ct)
+        var folder = await folderRepository.GetByIdAsync(folderId, ct)
             ?? throw new KeyNotFoundException($"Folder with id {folderId} was not found");
 
         if(folder.UserId == userId)
         {
-            await unitOfWork.Folders.RemoveFeedFromFolderAsync(feedId, folderId, ct);
+            await folderRepository.RemoveFeedFromFolderAsync(feedId, folderId, ct);
             await unitOfWork.CommitAsync(ct);
         }
         else
@@ -89,17 +89,17 @@ public class FolderService(IUnitOfWork unitOfWork) : IFolderService
         }
     }
 
-    public async Task RenameFolderAsync(int userId, int folderId, UpdateFolderDto updateFolderDto, CancellationToken ct = default)
+    public async Task RenameFolderAsync(int userId, int folderId, FolderNameDto updateFolderDto, CancellationToken ct = default)
     {
         if (string.IsNullOrEmpty(updateFolderDto.Name))
             throw new ArgumentException("Folder name connot be empty");
-        var folder = await unitOfWork.Folders.GetByIdAsync(folderId, ct)
+        var folder = await folderRepository.GetByIdAsync(folderId, ct)
             ?? throw new KeyNotFoundException($"Folder with id {folderId} was not found");
 
         if (folder.UserId == userId)
         {
             folder.Name  = updateFolderDto.Name;
-            await unitOfWork.Folders.UpdateAsync(folder, ct);
+            await folderRepository.UpdateAsync(folder, ct);
             await unitOfWork.CommitAsync(ct);
         }
         else

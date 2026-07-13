@@ -2,13 +2,8 @@
 
 namespace RssReader.Repositories.UnitOfWork;
 
-public interface IUnitOfWork : IDisposable
+public interface IUnitOfWork
 {
-    IFeedRepository Feeds { get; }
-    FeedItemRepository FeedItems { get; }
-    IFolderRepository Folders { get; }
-    IUserFeedItemRepository UserFeedItems { get; }
-    IUserRepository Users { get; }
-
+    Task<int> SaveChangesAsync(CancellationToken ct = default);
     Task<int> CommitAsync(CancellationToken ct = default);
 }

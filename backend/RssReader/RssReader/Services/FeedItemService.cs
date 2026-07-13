@@ -1,4 +1,5 @@
-﻿using RssReader.DTOs.FeedItem;
+﻿using Azure;
+using RssReader.DTOs.FeedItem;
 using RssReader.Repositories;
 using RssReader.Repositories.Interfaces;
 using RssReader.Repositories.UnitOfWork;
@@ -6,13 +7,15 @@ using RssReader.Services.Interfaces;
 
 namespace RssReader.Services;
 
-public class FeedItemService(IUnitOfWork unitOfWork) : IFeedItemService
+public class FeedItemService(FeedItemRepository feedItemRepository, IUserFeedItemRepository userFeedItemRepository, IUnitOfWork unitOfWork) : IFeedItemService
 {
+    private const int DefaultPageSize = 50;
+    private const int MaxPageSize = 200;
     public async Task<FeedItemDto> GetFeedItemAsync(int userId, int feedItemId, CancellationToken ct = default)
     {
-        var item = await unitOfWork.FeedItems.GetByIdAsync(feedItemId, ct)
-            ?? throw new KeyNotFoundException($"Feed Item with Id {feedItemId} wa not found");
-        var userState = await unitOfWork.UserFeedItems.GetAsync(userId, feedItemId, ct);
+        var item = await feedItemRepository.GetByIdAsync(feedItemId, ct)
+            ?? throw new KeyNotFoundException($"Feed Item with Id {feedItemId} was not found");
+        var userState = await userFeedItemRepository.GetAsync(userId, feedItemId, ct);
         
         return new FeedItemDto
         {
@@ -28,13 +31,13 @@ public class FeedItemService(IUnitOfWork unitOfWork) : IFeedItemService
         };
     }
 
-    public async Task<List<FeedItemDto>> GetFeedItemFilteredAsync(int userId, int feedId, FeedItemFilterQuery filter, CancellationToken ct = default)
+    public async Task<List<FeedItemDto>> GetFeedItemFilteredAsync(int userId, FeedItemFilterQuery filter, CancellationToken ct = default)
     {
-        var items = await unitOfWork.FeedItems.GetAllForUserAsync(userId, filter.IsRead, filter.IsFavorite, filter.DateFrom, filter.DateTo, ct);
+        var items = await feedItemRepository.GetAllForUserAsync(userId, filter.IsRead, filter.IsFavorite, filter.DateFrom, filter.DateTo, ct);
         var result = new List<FeedItemDto>();
         foreach (var item in items)
         {
-            var userState = await unitOfWork.UserFeedItems.GetAsync(userId, item.Id, ct);
+            var userState = await userFeedItemRepository.GetAsync(userId, item.Id, ct);
             result.Add(new FeedItemDto
             {
                 Id = item.Id,
@@ -52,15 +55,23 @@ public class FeedItemService(IUnitOfWork unitOfWork) : IFeedItemService
         return result;
     }
 
-    public async Task<FeedItemGroupedDto> GetFeedItemsGroupedAsync(int userId, int feedId, CancellationToken ct = default)
+    public async Task<FeedItemGroupedDto> GetFeedItemsGroupedAsync(int userId, int feedId, int pageNumber = 1, int pageSize = DefaultPageSize, CancellationToken ct = default)
     {
-        var items = await unitOfWork.FeedItems.GetByFeedIdAsync(feedId, skip: 0, take: 100, ct);
+        if (pageNumber < 1) throw new ArgumentException("Page must be greater than 0.");
+        if (pageSize < 1 || pageSize > MaxPageSize)
+            throw new ArgumentException("Page size must be between 1 and 200.");
+
+        var skip = (pageNumber - 1) * pageSize;
+
+        var items = await feedItemRepository
+            .GetByFeedIdAsync(feedId, skip: skip, take: pageSize, ct);
+
         var grouped = new FeedItemGroupedDto();
         var today = DateTime.UtcNow.Date;
 
         foreach (var item in items)
         {
-            var userState = await unitOfWork.UserFeedItems.GetAsync(userId, item.Id, ct);
+            var userState = await userFeedItemRepository.GetAsync(userId, item.Id, ct);
             if (userState?.IsRemoved == true) continue;
 
             var itemDto = new FeedItemDto()
@@ -88,18 +99,18 @@ public class FeedItemService(IUnitOfWork unitOfWork) : IFeedItemService
 
     public async Task MarkAsReadAsync(int userId, int feedItemId, bool isRead = true, CancellationToken ct = default)
     {
-        await unitOfWork.UserFeedItems.MarkAsReadAsync(userId, feedItemId, isRead);
+        await userFeedItemRepository.MarkAsReadAsync(userId, feedItemId, isRead);
         await unitOfWork.CommitAsync(ct);
     }
 
     public async Task RemoveFeedItemAsync(int userId, int feedItemId, CancellationToken ct = default)
     {
-        await unitOfWork.UserFeedItems.MarkAsRemovedAsync(userId, feedItemId, IsRemoved: true, ct);
+        await userFeedItemRepository.MarkAsRemovedAsync(userId, feedItemId, isRemoved: true, ct);
         await unitOfWork.CommitAsync(ct);
     }
     public async Task ChangeFavoriteStatusAsync(int userId, int feedItemId, bool isFavorite, CancellationToken ct = default)
     {
-        await unitOfWork.UserFeedItems.MarkAsFavoriteAsync(userId, feedItemId, isFavorite);
+        await userFeedItemRepository.MarkAsFavoriteAsync(userId, feedItemId, isFavorite);
         await unitOfWork.CommitAsync(ct);
     }
 }

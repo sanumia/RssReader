@@ -15,12 +15,12 @@ public class FolderRepository(RssReaderDbContext context) : BaseRepository<Folde
             .ToListAsync(ct);
     }
 
-    public async Task<List<FolderWithCountDto>> GetFoldersWithFeedCountsAsync(
+    public async Task<List<ResponseFolderDto>> GetFoldersWithFeedCountsAsync(
     int userId, CancellationToken ct = default)
     {
         return await context.Folders
             .Where(f => f.UserId == userId)
-            .Select(f => new FolderWithCountDto
+            .Select(f => new ResponseFolderDto
             {
                 Id = f.Id,
                 Name = f.Name,
@@ -53,6 +53,19 @@ public class FolderRepository(RssReaderDbContext context) : BaseRepository<Folde
         return await context.FeedFolders
             .Where(ff => ff.FolderId == folderId)
             .Select(ff => ff.Feed)
+            .ToListAsync(ct);
+    }
+
+    public async Task<List<ResponseFolderDto>> GetFoldersByFeedIdAsync(int feedId, CancellationToken ct = default)
+    {
+        return await context.FeedFolders
+            .Where(ff => ff.FeedId == feedId)
+            .Select(ff => new ResponseFolderDto
+            {
+                Id = ff.Folder.Id,
+                Name = ff.Folder.Name,
+                FeedCount = ff.Folder.FeedFolders.Count
+            })
             .ToListAsync(ct);
     }
 }

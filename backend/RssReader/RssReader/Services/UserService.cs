@@ -1,10 +1,11 @@
 ﻿using RssReader.DTOs.User;
+using RssReader.Repositories.Interfaces;
 using RssReader.Repositories.UnitOfWork;
 using RssReader.Services.Interfaces;
 
 namespace RssReader.Services;
 
-public class UserService(IUnitOfWork unitOfWork) : IUserService
+public class UserService(IUserRepository userRepository, IUnitOfWork unitOfWork) : IUserService
 {
     public Task ChangePasswordAsync(int userId, ChangePasswordDto changePasswordDto, CancellationToken ct = default)
     {
@@ -13,22 +14,22 @@ public class UserService(IUnitOfWork unitOfWork) : IUserService
 
     public async Task DeleteAccountAsync(int userId, CancellationToken ct = default)
     {
-        var user = await unitOfWork.Users.GetByIdAsync(userId, ct)
+        var user = await userRepository.GetByIdAsync(userId, ct)
             ?? throw new KeyNotFoundException($"User with id {userId} doesn't exist");
 
-        await unitOfWork.Users.DeleteAsync(userId, ct);
+        await userRepository.DeleteAsync(userId, ct);
         await unitOfWork.CommitAsync(ct);
     }
 
     public async Task<UserProfileDto> GetUserProfileAsync(int userId, CancellationToken ct = default)
     {
-        var user = await unitOfWork.Users.GetByIdAsync(userId, ct)
+        var user = await userRepository.GetByIdAsync(userId, ct)
             ?? throw new KeyNotFoundException($"User with id {userId} doesn't exist");
 
         return new UserProfileDto
         {
             UserId = user.Id,
-            Username = user.Username,
+            UserName = user.UserName,
             Email = user.Email,
         };
     }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RssReader.Data;
+using RssReader.DTOs.Feed;
 using RssReader.Models;
 using RssReader.Repositories.Interfaces;
 
@@ -51,5 +52,25 @@ public class FeedRepository(RssReaderDbContext context) : BaseRepository<Feed>(c
     public async Task<bool> UserIsSubscribedAsync(int userId, int feedId, CancellationToken ct = default)
     {
         return await context.UserFeeds.AnyAsync(uf => uf.UserId == userId && uf.FeedId == feedId, ct);
+    }
+
+    public async Task<List<DashboardFeedDto>> GetDashboardFeedsAsync(
+    int userId, CancellationToken ct = default)
+    {
+        return await context.UserFeeds
+            .Where(uf => uf.UserId == userId)
+            .Select(uf => new DashboardFeedDto
+            {
+                Id = uf.Feed.Id,
+                Url = uf.Feed.Url,
+                Title = uf.Feed.Title,
+                IconUrl = uf.Feed.IconUrl,
+                FeedItemCount = uf.Feed.FeedItems.Count,
+                FolderNames = uf.Feed.FeedFolders
+                    .Where(ff => ff.Folder.UserId == userId)
+                    .Select(ff => ff.Folder.Name)
+                    .ToList()
+            })
+            .ToListAsync(ct);
     }
 }
