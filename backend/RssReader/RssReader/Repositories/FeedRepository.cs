@@ -55,7 +55,7 @@ public class FeedRepository(RssReaderDbContext context) : BaseRepository<Feed>(c
     }
 
     public async Task<List<DashboardFeedDto>> GetDashboardFeedsAsync(
-    int userId, CancellationToken ct = default)
+        int userId, CancellationToken ct = default)
     {
         return await context.UserFeeds
             .Where(uf => uf.UserId == userId)

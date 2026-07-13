@@ -13,9 +13,9 @@ public class FeedService(
 {
     public async Task<ResponseFeedDto> CreateFeedAsync(int userId, CreateFeedDto createFeedDto, CancellationToken ct = default)
     {
-        var existingFeed =  await feedRepository.GetByUrlAsync(createFeedDto.Url, ct);
-        Feed feed;
-        if(existingFeed is null)
+        var feed =  await feedRepository.GetByUrlAsync(createFeedDto.Url, ct);
+
+        if (feed is null)
         {
             var isValid = await ValidateFeedAsync(createFeedDto.Url);
             if (isValid)
@@ -34,11 +34,12 @@ public class FeedService(
                 throw new Exception($"Url {createFeedDto.Url} is not valid");
             }
         }
-        else
-        {
-            feed = existingFeed;
-        }
 
+        var isSubscribed = await feedRepository.UserIsSubscribedAsync(userId, feed.Id, ct);
+        if (isSubscribed)
+        {
+            throw new InvalidOperationException($"You are already subscribed to this feed");
+        }
         await feedRepository.SubscribeUserToFeedAsync(userId, feed.Id, ct);
         await unitOfWork.CommitAsync(ct);
 

@@ -12,6 +12,7 @@ public class AuthController(IAuthService authService) : ControllerBase
     public async Task<IActionResult> Register(RegisterDto registerDto, CancellationToken ct)
     {
         var result = await authService.RegisterAsync(registerDto, ct);
+
         return Ok(result);
     }
 
@@ -19,6 +20,7 @@ public class AuthController(IAuthService authService) : ControllerBase
     public async Task<IActionResult> Login(LoginDto loginDto, CancellationToken ct)
     {
         var result = await authService.LoginAsync(loginDto, ct);
+
         return Ok(result);
     }
 }

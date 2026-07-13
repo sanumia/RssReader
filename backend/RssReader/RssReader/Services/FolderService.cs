@@ -28,9 +28,12 @@ public class FolderService(IFolderRepository folderRepository, IUnitOfWork unitO
     {
         if (string.IsNullOrEmpty(createFolderDto.Name))
             throw new ArgumentException("Folders name can't be empty");
+
         var existingFolders = await folderRepository.GetAllByUserIdAsync(userId, ct);
+
         if (existingFolders.Any(f => f.Name.Equals(createFolderDto.Name, StringComparison.OrdinalIgnoreCase)))
             throw new Exception($"Folder with name {createFolderDto.Name} already exists");
+
         var folder = new Folder { Name = createFolderDto.Name, UserId = userId };
         var created = await folderRepository.AddAsync(folder, ct);
         await unitOfWork.CommitAsync(ct);
@@ -57,20 +60,21 @@ public class FolderService(IFolderRepository folderRepository, IUnitOfWork unitO
         {
             throw new Exception($"User doesn't have this folder");
         }
-
     }
 
     public async Task<List<ResponseFolderDto>> GetFoldersWithFeedCountsAsync(
-    int userId, CancellationToken ct = default)
+        int userId, CancellationToken ct = default)
     {
         var folders = await folderRepository.GetFoldersWithFeedCountsAsync(userId, ct);
 
-        return folders.Select(f => new ResponseFolderDto
-        {
-            Id = f.Id,
-            Name = f.Name,
-            FeedCount = f.FeedCount
-        }).ToList();
+        return folders
+            .Select(f => new ResponseFolderDto
+                {
+                    Id = f.Id,
+                    Name = f.Name,
+                    FeedCount = f.FeedCount
+                })
+            .ToList();
     }
 
     public async Task RemoveFeedFromFolderAsync(int userId, int folderId, int feedId, CancellationToken ct = default)
