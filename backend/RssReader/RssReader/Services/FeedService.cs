@@ -11,6 +11,19 @@ public class FeedService(
     IFolderRepository folderRepository,
     IUnitOfWork unitOfWork) : IFeedService
 {
+    public async Task<List<ResponseFeedDto>> GetAllFeedsAsync(CancellationToken ct = default)
+    {
+        List<Feed> feeds = await feedRepository.GetAllAsync(ct);
+
+        return feeds.Select(f => new ResponseFeedDto
+        {
+            Id = f.Id,
+            Url = f.Url,
+            Title = f.Title,
+            IconUrl = f.IconUrl,
+        }).ToList();
+    }
+
     public async Task<ResponseFeedDto> CreateFeedAsync(int userId, CreateFeedDto createFeedDto, CancellationToken ct = default)
     {
         var feed =  await feedRepository.GetByUrlAsync(createFeedDto.Url, ct);
