@@ -24,17 +24,17 @@ public class FolderService(IFolderRepository folderRepository, IUnitOfWork unitO
         }
     }
 
-    public async Task<ResponseFolderDto> CreateFolderAsync(int userId, FolderNameDto createFolderDto, CancellationToken ct = default)
+    public async Task<ResponseFolderDto> CreateFolderAsync(int userId, FolderNameDto folderNameDto, CancellationToken ct = default)
     {
-        if (string.IsNullOrEmpty(createFolderDto.Name))
+        if (string.IsNullOrEmpty(folderNameDto.Name))
             throw new ArgumentException("Folders name can't be empty");
 
         var existingFolders = await folderRepository.GetAllByUserIdAsync(userId, ct);
 
-        if (existingFolders.Any(f => f.Name.Equals(createFolderDto.Name, StringComparison.OrdinalIgnoreCase)))
-            throw new Exception($"Folder with name {createFolderDto.Name} already exists");
+        if (existingFolders.Any(f => f.Name.Equals(folderNameDto.Name, StringComparison.OrdinalIgnoreCase)))
+            throw new Exception($"Folder with name {folderNameDto.Name} already exists");
 
-        var folder = new Folder { Name = createFolderDto.Name, UserId = userId };
+        var folder = new Folder { Name = folderNameDto.Name, UserId = userId };
         var created = await folderRepository.AddAsync(folder, ct);
         await unitOfWork.CommitAsync(ct);
 

@@ -8,6 +8,11 @@ namespace RssReader.Repositories;
 
 public class FeedRepository(RssReaderDbContext context) : BaseRepository<Feed>(context), IFeedRepository
 {
+    public async Task<List<Feed>> GetAllAsync(CancellationToken ct = default)
+    {
+        return await context.Feeds.ToListAsync(ct);
+    }
+
     public async Task<bool> ExistsByUrlAsync(string url, CancellationToken ct = default)
     {
         return await context.Feeds.AnyAsync(f => f.Url == url, ct);

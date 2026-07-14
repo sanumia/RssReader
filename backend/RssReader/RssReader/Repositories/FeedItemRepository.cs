@@ -7,6 +7,22 @@ namespace RssReader.Repositories;
 
 public class FeedItemRepository(RssReaderDbContext context) : BaseRepository<FeedItem>(context)
 {
+    public async Task<List<FeedItem>> GetAllAsync(DateTime? from, DateTime? to, int skip, int take, CancellationToken ct = default)
+    {
+        var query = context.FeedItems.AsQueryable();
+
+        if(from.HasValue)
+            query = query.Where(fi => fi.PublishDate >=  from.Value);
+
+        if (to.HasValue)
+            query = query.Where(fi => fi.PublishDate <= to.Value);
+
+        return await query
+            .OrderByDescending(fi => fi.PublishDate)
+            .Skip(skip)
+            .Take(take)
+            .ToListAsync(ct);
+    }
     public async Task AddRangeAsync(List<FeedItem> feedItems, CancellationToken ct = default)
     {
         await context.FeedItems.AddRangeAsync(feedItems, ct);
