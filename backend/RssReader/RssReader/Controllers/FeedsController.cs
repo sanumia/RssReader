@@ -13,8 +13,6 @@ namespace RssReader.Controllers;
 [Route("api/feeds")]
 public class FeedsController(IFeedService feedService) : ControllerBase
 {
-    protected int CurrentUserId
-        => int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
     [HttpGet("all")]
     public async Task<IActionResult> GetAllFeedsAsync(CancellationToken ct)
     {
@@ -26,7 +24,7 @@ public class FeedsController(IFeedService feedService) : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetFeedsAsync(CancellationToken ct)
     {
-        var result = await feedService.GetFeedsForDashboardAsync(CurrentUserId, ct);
+        var result = await feedService.GetFeedsForDashboardAsync(ct);
         
         return Ok(result);
     }
@@ -34,7 +32,7 @@ public class FeedsController(IFeedService feedService) : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateFeedAsync(CreateFeedDto createFeedDto, CancellationToken ct)
     {
-        var result = await feedService.CreateFeedAsync(CurrentUserId, createFeedDto, ct);
+        var result = await feedService.CreateFeedAsync(createFeedDto, ct);
         
         return Ok(result);
     }
@@ -42,7 +40,7 @@ public class FeedsController(IFeedService feedService) : ControllerBase
     [HttpPut("{feedId}")]
     public async Task<IActionResult> UpdateFeedAsync(int feedId, UpdateFeedDto updateFeedDto, CancellationToken ct)
     {
-        await feedService.UpdateFeedAsync(CurrentUserId, feedId, updateFeedDto, ct);
+        await feedService.UpdateFeedAsync(feedId, updateFeedDto, ct);
         
         return NoContent();
     }
@@ -50,7 +48,7 @@ public class FeedsController(IFeedService feedService) : ControllerBase
     [HttpDelete("{feedId}")]
     public async Task<IActionResult> DeleteFeedAsync(int feedId, CancellationToken ct)
     {
-        await feedService.RemoveFeedAsync(CurrentUserId, feedId, ct);
+        await feedService.RemoveFeedAsync(feedId, ct);
         
         return NoContent();
     }

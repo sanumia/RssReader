@@ -13,13 +13,10 @@ namespace RssReader.Controllers;
 [Route("api/folders")]
 public class FoldersController(IFolderService folderService) : ControllerBase
 {
-    protected int CurrentUserId
-        => int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-
     [HttpGet]
     public async Task<IActionResult> GetFoldersAsync(CancellationToken ct)
     {
-        var result = await folderService.GetFoldersWithFeedCountsAsync(CurrentUserId, ct);
+        var result = await folderService.GetFoldersWithFeedCountsAsync(ct);
         
         return Ok(result);
     }
@@ -27,7 +24,7 @@ public class FoldersController(IFolderService folderService) : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateFolderAsync(FolderNameDto folderNameDto, CancellationToken ct)
     {
-        var result = await folderService.CreateFolderAsync(CurrentUserId, folderNameDto, ct);
+        var result = await folderService.CreateFolderAsync(folderNameDto, ct);
         
         return Ok(result);
     }
@@ -35,7 +32,7 @@ public class FoldersController(IFolderService folderService) : ControllerBase
     [HttpPut("{folderId}")]
     public async Task<IActionResult> UpdateFolderAsync(int folderId, FolderNameDto folderNameDto, CancellationToken ct)
     {
-        await folderService.RenameFolderAsync(CurrentUserId, folderId, folderNameDto, ct);
+        await folderService.RenameFolderAsync(folderId, folderNameDto, ct);
         
         return NoContent();
     }
@@ -43,7 +40,7 @@ public class FoldersController(IFolderService folderService) : ControllerBase
     [HttpDelete("{folderId}")]
     public async Task<IActionResult> DeleteFolderAsync(int folderId, CancellationToken ct)
     {
-        await folderService.DeleteFolderAsync(CurrentUserId, folderId, ct);
+        await folderService.DeleteFolderAsync(folderId, ct);
 
         return NoContent();
     }
@@ -51,7 +48,7 @@ public class FoldersController(IFolderService folderService) : ControllerBase
     [HttpPost("{folderId}/feeds/{feedId}")]
     public async Task<IActionResult> AddFeedToFolderAsync(int folderId, int feedId, CancellationToken ct)
     {
-        await folderService.AddFeedToFolderAsync(CurrentUserId, folderId, feedId, ct);
+        await folderService.AddFeedToFolderAsync(folderId, feedId, ct);
 
         return NoContent();
     }
@@ -59,7 +56,7 @@ public class FoldersController(IFolderService folderService) : ControllerBase
     [HttpDelete("{folderId}/feeds/{feedId}")]
     public async Task<IActionResult> RemoveFeedFromFolderAsync(int folderId, int feedId, CancellationToken ct)
     {
-        await folderService.RemoveFeedFromFolderAsync(CurrentUserId, folderId, feedId, ct);
+        await folderService.RemoveFeedFromFolderAsync(folderId, feedId, ct);
 
         return NoContent();
     }
