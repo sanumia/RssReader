@@ -10,98 +10,83 @@ namespace RssReader.Controllers;
 
 [ApiController]
 [Authorize]
-[Route("api")]
+[Route("api/items")]
 public class FeedItemsController(FeedItemService feedItemService) : ControllerBase
 {
-    protected int CurrentUserId
-        => int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-
-
-    [HttpGet("items/all")]
-    public async Task<IActionResult> GetAllItemsAsync(
-        [FromQuery] FeedItemFilterQuery filter,
-        [FromQuery] int pageNumber = 1,
+    [AllowAnonymous]
+    [HttpGet("global")]
+    public async Task<IActionResult> GetGlobalItems(
+        [FromQuery] DateTime? from,
+        [FromQuery] DateTime? to,
+        [FromQuery] int pageNumber = PaginationConstants.DefaultPageNumber,
         [FromQuery] int pageSize = PaginationConstants.DefaultPageSize,
         CancellationToken ct = default)
     {
-        var result = await feedItemService.GetAllFeedItemsFilteredAsync(
-            CurrentUserId,
-            filter,
-            pageNumber,
-            pageSize,
-            ct);
-
+        var result = await feedItemService
+            .GetGlobalFeedItemsAsync(from, to, pageNumber, pageSize, ct);
         return Ok(result);
     }
 
-    [HttpGet("feeds/{feedId}/items/all")]
-    public async Task<IActionResult> GetAllItemsGroupedAsync(
-        int feedId,
-        [FromQuery] int pageNumber = 1,
+    [HttpGet("personal")]
+    public async Task<IActionResult> GetPersonalItems(
+        [FromQuery] DateTime? from,
+        [FromQuery] DateTime? to,
+        [FromQuery] int pageNumber = PaginationConstants.DefaultPageNumber,
         [FromQuery] int pageSize = PaginationConstants.DefaultPageSize,
         CancellationToken ct = default)
     {
-        var result = await feedItemService.GetAllFeedItemsGroupedAsync(
-            CurrentUserId, 
-            feedId, 
+        var result = await feedItemService
+            .GetPersonalFeedItemsAsync(from, to, pageNumber, pageSize, ct);
+        return Ok(result);
+    }
+
+    [HttpGet("filtered")]
+    public async Task<IActionResult> GetPersonalItemsFiltered(
+        [FromQuery] bool? isRead,
+        [FromQuery] bool? isFavorite,
+        [FromQuery] DateTime? from,
+        [FromQuery] DateTime? to,
+        [FromQuery] int pageNumber = PaginationConstants.DefaultPageNumber,
+        [FromQuery] int pageSize = PaginationConstants.DefaultPageSize,
+        CancellationToken ct = default)
+    {
+        var result = await feedItemService
+            .GetPersonalFeedItemsFilteredAsync(
+            isRead, 
+            isFavorite, 
+            from, 
+            to, 
             pageNumber, 
             pageSize, 
             ct);
-
         return Ok(result);
     }
 
-    [HttpGet("feeds/{feedId}/items")]
-    public async Task<IActionResult> GetItemsGroupedAsync(
-        int feedId, 
-        [FromQuery] int pageNumber = 1, 
-        [FromQuery] int pageSize = PaginationConstants.DefaultPageSize, 
-        CancellationToken ct = default)
+    [HttpGet("{itemId}")]
+    public async Task<IActionResult> GetItem(int itemId, CancellationToken ct)
     {
-        var result = await feedItemService.GetFeedItemsGroupedAsync(CurrentUserId, feedId, pageNumber, pageSize, ct);
-
+        var result = await feedItemService.GetFeedItemAsync(itemId, ct);
         return Ok(result);
     }
 
-    [HttpGet("items")]
-    public async Task<IActionResult> GetItemsFilteredAsync(
-        [FromQuery] FeedItemFilterQuery filter, 
-        CancellationToken ct)
+    [HttpPost("{itemId}/read")]
+    public async Task<IActionResult> MarkAsRead(int itemId, [FromQuery] bool isRead = true, CancellationToken ct = default)
     {
-        var result = await feedItemService.GetFeedItemFilteredAsync(CurrentUserId, filter, ct);
-
-        return Ok(result);
-    }
-
-    [HttpGet("items/{itemId}")]
-    public async Task<IActionResult> GetItemAsync(int itemId, CancellationToken ct)
-    {
-        var result = await feedItemService.GetFeedItemAsync(CurrentUserId, itemId, ct);
-
-        return Ok(result);
-    }
-
-    [HttpPost("items/{itemId}/read")]
-    public async Task<IActionResult> MarkFeedAsReadAsync(int itemId, bool isRead = true, CancellationToken ct = default)
-    {
-        await feedItemService.MarkAsReadAsync(CurrentUserId, itemId, isRead, ct);
-
+        await feedItemService.MarkAsReadAsync(itemId, isRead, ct);
         return NoContent();
     }
 
-    [HttpPost("items/{itemId}/favorite")]
-    public async Task<IActionResult> ChangeFavoriteStatusAsync(int itemId, bool isFavorite, CancellationToken ct)
+    [HttpPost("{itemId}/favorite")]
+    public async Task<IActionResult> ChangeFavoriteStatus(int itemId, [FromQuery] bool isFavorite, CancellationToken ct)
     {
-        await feedItemService.ChangeFavoriteStatusAsync(CurrentUserId, itemId, isFavorite, ct);
-
+        await feedItemService.ChangeFavoriteStatusAsync(itemId, isFavorite, ct);
         return NoContent();
     }
 
-    [HttpDelete("items/{itemId}")]
-    public async Task<IActionResult> RemoveFeedItemAsync(int itemId, CancellationToken ct)
+    [HttpDelete("{itemId}")]
+    public async Task<IActionResult> RemoveItem(int itemId, CancellationToken ct)
     {
-        await feedItemService.RemoveFeedItemAsync(CurrentUserId, itemId, ct);
-
+        await feedItemService.RemoveFeedItemAsync(itemId, ct);
         return NoContent();
     }
 }

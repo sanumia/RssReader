@@ -9,7 +9,8 @@ namespace RssReader.Services;
 public class FeedService(
     IFeedRepository feedRepository,
     IFolderRepository folderRepository,
-    IUnitOfWork unitOfWork) : IFeedService
+    IUnitOfWork unitOfWork,
+    CurrentUserService currentUserService) : IFeedService
 {
     public async Task<List<ResponseFeedDto>> GetAllFeedsAsync(CancellationToken ct = default)
     {
@@ -24,7 +25,7 @@ public class FeedService(
         }).ToList();
     }
 
-    public async Task<ResponseFeedDto> CreateFeedAsync(int userId, CreateFeedDto createFeedDto, CancellationToken ct = default)
+    public async Task<ResponseFeedDto> CreateFeedAsync(CreateFeedDto createFeedDto, CancellationToken ct = default)
     {
         var feed =  await feedRepository.GetByUrlAsync(createFeedDto.Url, ct);
 
@@ -48,12 +49,12 @@ public class FeedService(
             }
         }
 
-        var isSubscribed = await feedRepository.UserIsSubscribedAsync(userId, feed.Id, ct);
+        var isSubscribed = await feedRepository.UserIsSubscribedAsync(currentUserService.UserId, feed.Id, ct);
         if (isSubscribed)
         {
             throw new InvalidOperationException($"You are already subscribed to this feed");
         }
-        await feedRepository.SubscribeUserToFeedAsync(userId, feed.Id, ct);
+        await feedRepository.SubscribeUserToFeedAsync(currentUserService.UserId, feed.Id, ct);
         await unitOfWork.CommitAsync(ct);
 
         return new ResponseFeedDto
@@ -65,27 +66,26 @@ public class FeedService(
         };
     }
 
-    public async Task<List<DashboardFeedDto>> GetFeedsForDashboardAsync(
-    int userId, CancellationToken ct = default)
+    public async Task<List<DashboardFeedDto>> GetFeedsForDashboardAsync(CancellationToken ct = default)
     {
-        return await feedRepository.GetDashboardFeedsAsync(userId, ct);
+        return await feedRepository.GetDashboardFeedsAsync(currentUserService.UserId, ct);
     }
 
-    public async Task RemoveFeedAsync(int userId, int feedId, CancellationToken ct = default)
+    public async Task RemoveFeedAsync(int feedId, CancellationToken ct = default)
     {
-        var isSubscribe = await feedRepository.UserIsSubscribedAsync(userId, feedId, ct);
+        var isSubscribe = await feedRepository.UserIsSubscribedAsync(currentUserService.UserId, feedId, ct);
         if (isSubscribe)
         {
-            await feedRepository.UnsubscribeUserFromFeedAsync(userId, feedId, ct);
+            await feedRepository.UnsubscribeUserFromFeedAsync(currentUserService.UserId, feedId, ct);
             await unitOfWork.CommitAsync(ct);
         }
         else
         {
-            throw new KeyNotFoundException($"User {userId} is not subscribe on feed {feedId}");
+            throw new KeyNotFoundException($"User {currentUserService.UserId} is not subscribe on feed {feedId}");
         }
     }
 
-    public async Task UpdateFeedAsync(int userId, int feedId, UpdateFeedDto updateFeedDto, CancellationToken ct = default)
+    public async Task UpdateFeedAsync(int feedId, UpdateFeedDto updateFeedDto, CancellationToken ct = default)
     {
         var feed = await feedRepository.GetByIdAsync(feedId, ct)
             ?? throw new KeyNotFoundException($"Feed with id {feedId} was not found");
