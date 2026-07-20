@@ -11,7 +11,7 @@ namespace RssReader.Controllers;
 [ApiController]
 [Authorize]
 [Route("api/feeds")]
-public class FeedsController(IFeedService feedService) : ControllerBase
+public class FeedController(IFeedService feedService) : ControllerBase
 {
     [HttpGet("all")]
     public async Task<IActionResult> GetAllFeedsAsync(CancellationToken ct)
@@ -37,7 +37,7 @@ public class FeedsController(IFeedService feedService) : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut("{feedId}")]
+    [HttpPut("{feedId:int}")]
     public async Task<IActionResult> UpdateFeedAsync(int feedId, UpdateFeedDto updateFeedDto, CancellationToken ct)
     {
         await feedService.UpdateFeedAsync(feedId, updateFeedDto, ct);
@@ -45,7 +45,7 @@ public class FeedsController(IFeedService feedService) : ControllerBase
         return NoContent();
     }
 
-    [HttpDelete("{feedId}")]
+    [HttpDelete("{feedId:int}")]
     public async Task<IActionResult> DeleteFeedAsync(int feedId, CancellationToken ct)
     {
         await feedService.RemoveFeedAsync(feedId, ct);

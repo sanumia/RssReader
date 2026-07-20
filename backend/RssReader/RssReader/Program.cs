@@ -22,7 +22,7 @@ builder.Services.AddDbContext<RssReaderDbContext>(options =>
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-builder.Services.AddAutoMapper(cfg => { }, typeof(MappingProfile));
+builder.Services.AddAutoMapper(cfg => { }, typeof(FeedItemMappingProfile));
 
 builder.Services.AddScoped<IFolderRepository, FolderRepository>();
 builder.Services.AddScoped<IFeedRepository, FeedRepository>();

@@ -8,8 +8,8 @@ namespace RssReader.Controllers;
 
 [ApiController]
 [Authorize]
-[Route("api/feed/{feedId}/items")]
-public class FeedFeedItemsController(IFeedItemService feedItemService) : ControllerBase
+[Route("api/feed/{feedId:int}/feeditems")]
+public class FeedFeedItemListingController(IFeedItemService feedItemService) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetItems(
@@ -30,8 +30,11 @@ public class FeedFeedItemsController(IFeedItemService feedItemService) : Control
         [FromQuery] int pageSize = PaginationConstants.DefaultPageSize,
         CancellationToken ct = default)
     {
-        var result = await feedItemService
-            .GetFeedItemsGroupedByFeedIdAsync(feedId, pageNumber, pageSize, ct);
+        var result = await feedItemService.GetFeedItemsGroupedByFeedIdAsync(
+            feedId,
+            pageNumber,
+            pageSize,
+            ct);
         return Ok(result);
     }
 }
