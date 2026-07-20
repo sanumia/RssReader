@@ -70,8 +70,7 @@ public class FeedItemRepository(RssReaderDbContext context) : BaseRepository<Fee
 
     public IQueryable<FeedItem> GetSingleQuery(int feedItemId)
     {
-        return context.FeedItems
-            .Where(fi => fi.Id == feedItemId);
+        return context.FeedItems.Where(fi => fi.Id == feedItemId);
     }
 
     public async Task AddRangeAsync(

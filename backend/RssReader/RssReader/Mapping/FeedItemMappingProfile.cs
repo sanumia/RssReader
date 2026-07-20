@@ -4,9 +4,9 @@ using RssReader.Models;
 
 namespace RssReader.Mapping;
 
-public class MappingProfile : Profile
+public class FeedItemMappingProfile : Profile
 {
-    public MappingProfile()
+    public FeedItemMappingProfile()
     {
         CreateMap<FeedItem, FeedItemDto>()
             .ForMember(dest => dest.IsRead, opt => opt.MapFrom(src => false))
