@@ -20,7 +20,7 @@ public class FeedItemRepository(RssReaderDbContext context) : BaseRepository<Fee
         return query;
     }
 
-    public IQueryable<FeedItem> GetPersonalFeedItemsQuery(int userId, DateTime? from, DateTime? to)
+    public IQueryable<FeedItem> GetPersonalFeedItemsByDateQuery(int userId, DateTime? from, DateTime? to)
     {
         var query = context.FeedItems
             .Where(fi => context.UserFeeds.Any(uf => uf.UserId == userId && uf.FeedId == fi.FeedId))
@@ -36,24 +36,21 @@ public class FeedItemRepository(RssReaderDbContext context) : BaseRepository<Fee
 
     public IQueryable<FeedItem> GetPersonalFeedItemsQuery(
         int userId,
-        bool? isRead,
-        bool? isFavorite,
-        DateTime? from,
-        DateTime? to)
+        PersonalFeedItemsFilter filter)
     {
         var query = context.FeedItems
             .Where(fi => context.UserFeeds.Any(uf => uf.UserId == userId && uf.FeedId == fi.FeedId))
             .Where(fi => !fi.UserFeedItems.Any(uf => uf.UserId == userId && uf.IsRemoved));
 
-        if (isRead.HasValue)
-            query = query.Where(fi => fi.UserFeedItems.Any(uf => uf.UserId == userId && uf.IsRead == isRead.Value));
-        if (isFavorite.HasValue)
-            query = query.Where(fi => fi.UserFeedItems.Any(uf => uf.UserId == userId && uf.IsFavorite == isFavorite.Value));
+        if (filter.IsRead.HasValue)
+            query = query.Where(fi => fi.UserFeedItems.Any(uf => uf.UserId == userId && uf.IsRead == filter.IsRead.Value));
+        if (filter.IsFavorite.HasValue)
+            query = query.Where(fi => fi.UserFeedItems.Any(uf => uf.UserId == userId && uf.IsFavorite == filter.IsFavorite.Value));
 
-        if (from.HasValue)
-            query = query.Where(fi => fi.PublishDate >= from.Value);
-        if (to.HasValue)
-            query = query.Where(fi => fi.PublishDate <= to.Value);
+        if (filter.From.HasValue)
+            query = query.Where(fi => fi.PublishDate >= filter.From.Value);
+        if (filter.To.HasValue)
+            query = query.Where(fi => fi.PublishDate <= filter.To.Value);
 
         return query;
     }

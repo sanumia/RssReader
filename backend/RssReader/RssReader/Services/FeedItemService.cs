@@ -38,7 +38,7 @@ public class FeedItemService(
 
         int userId = currentUserService.UserId;
         return await GetPagedFeedItemsAsync(
-            feedItemRepository.GetPersonalFeedItemsQuery(userId, globalFeedItemsFilter.From, globalFeedItemsFilter.To),
+            feedItemRepository.GetPersonalFeedItemsByDateQuery(userId, globalFeedItemsFilter.From, globalFeedItemsFilter.To),
             ToDtoPersonal(userId),
             globalFeedItemsFilter.PageNumber,
             globalFeedItemsFilter.PageSize,
@@ -53,10 +53,7 @@ public class FeedItemService(
         return await GetPagedFeedItemsAsync(
            feedItemRepository.GetPersonalFeedItemsQuery(
                userId,
-               personalFeedItemsFilter.IsRead,
-               personalFeedItemsFilter.IsFavorite,
-               personalFeedItemsFilter.From,
-               personalFeedItemsFilter.To),
+               personalFeedItemsFilter),
            ToDtoPersonal(userId),
            personalFeedItemsFilter.PageNumber,
            personalFeedItemsFilter.PageSize,
