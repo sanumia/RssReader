@@ -8,8 +8,8 @@ namespace RssReader.Controllers;
 
 [ApiController]
 [Authorize]
-[Route("api/feed/{feedId:int}/feeditems")]
-public class FeedFeedItemListingController(IFeedItemService feedItemService) : ControllerBase
+[Route("api/feed/{feedId:int}/feed-items")]
+public class FeedItemListingController(IFeedItemService feedItemService) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetItems(

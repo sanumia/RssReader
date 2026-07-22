@@ -10,14 +10,12 @@ namespace RssReader.Controllers;
 
 [ApiController]
 [Authorize]
-[Route("api/feeditems")]
+[Route("api/feed-items")]
 public class FeedItemController(FeedItemService feedItemService) : ControllerBase
 {
     [AllowAnonymous]
     [HttpGet("global")]
-    public async Task<IActionResult> GetGlobalItems(
-        [FromQuery] GlobalFeedItemsFilter globalFeedItemsFilter,
-        CancellationToken ct = default)
+    public async Task<IActionResult> GetGlobalItems([FromQuery] GlobalFeedItemsFilter globalFeedItemsFilter, CancellationToken ct = default)
     {
         var result = await feedItemService.GetGlobalFeedItemsAsync(globalFeedItemsFilter, ct);
 
@@ -25,9 +23,7 @@ public class FeedItemController(FeedItemService feedItemService) : ControllerBas
     }
 
     [HttpGet("personal")]
-    public async Task<IActionResult> GetPersonalItems(
-        [FromQuery] GlobalFeedItemsFilter globalFeedItemsFilter,
-        CancellationToken ct = default)
+    public async Task<IActionResult> GetPersonalItems([FromQuery] GlobalFeedItemsFilter globalFeedItemsFilter, CancellationToken ct = default)
     {
         var result = await feedItemService.GetPersonalFeedItemsAsync(globalFeedItemsFilter, ct);
 
@@ -35,16 +31,14 @@ public class FeedItemController(FeedItemService feedItemService) : ControllerBas
     }
 
     [HttpGet("filtered")]
-    public async Task<IActionResult> GetPersonalItemsFiltered(
-        [FromQuery] PersonalFeedItemsFilter personalFeedItemsFilter,
-        CancellationToken ct = default)
+    public async Task<IActionResult> GetPersonalItemsFiltered([FromQuery] PersonalFeedItemsFilter personalFeedItemsFilter, CancellationToken ct = default)
     {
         var result = await feedItemService.GetPersonalFeedItemsFilteredAsync(personalFeedItemsFilter, ct);
 
         return Ok(result);
     }
 
-    [HttpGet("{itemId}")]
+    [HttpGet("{itemId:int}")]
     public async Task<IActionResult> GetItem(int itemId, CancellationToken ct)
     {
         var result = await feedItemService.GetFeedItemAsync(itemId, ct);
