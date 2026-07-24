@@ -12,6 +12,7 @@ export default [
         sourceType: "module",
         globals: {
             ...globals.browser,
+            ...globals.node,
         },
         parserOptions: {
             ecmaFeatures: { jsx: true },
@@ -24,6 +25,7 @@ export default [
         ...pluginReact.configs.flat.recommended.rules,
         "react/react-in-jsx-scope": "off",
         "react/jsx-uses-react": "off",
+        "react/prop-types": "off"
         },
         settings: {
         react: {
@@ -38,12 +40,12 @@ export default [
         ecmaVersion: "latest",
         sourceType: "commonjs",
         globals: {
+            ...globals.browser,
             ...globals.node,
         },
         },
     },
 
-    // Ignore output/build artifacts and dependencies entirely
     {
         ignores: ["build/**", "node_modules/**", "dist/**"],
     },
