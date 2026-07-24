@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RssReader.Data;
+using RssReader.Mapping;
 using RssReader.Repositories;
 using RssReader.Repositories.Interfaces;
 using RssReader.Repositories.UnitOfWork;
@@ -21,6 +22,8 @@ builder.Services.AddDbContext<RssReaderDbContext>(options =>
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+builder.Services.AddAutoMapper(cfg => { }, typeof(FeedItemMappingProfile));
+
 builder.Services.AddScoped<IFolderRepository, FolderRepository>();
 builder.Services.AddScoped<IFeedRepository, FeedRepository>();
 builder.Services.AddScoped<IUserFeedItemRepository, UserFeedItemRepository>();
@@ -35,6 +38,9 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<CurrentUserService>();
 
 builder.Services
     .AddAuthentication(options =>

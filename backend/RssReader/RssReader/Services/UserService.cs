@@ -5,26 +5,29 @@ using RssReader.Services.Interfaces;
 
 namespace RssReader.Services;
 
-public class UserService(IUserRepository userRepository, IUnitOfWork unitOfWork) : IUserService
+public class UserService(
+    IUserRepository userRepository, 
+    IUnitOfWork unitOfWork,
+    CurrentUserService currentUserService) : IUserService
 {
-    public Task ChangePasswordAsync(int userId, ChangePasswordDto changePasswordDto, CancellationToken ct = default)
+    public Task ChangePasswordAsync(ChangePasswordDto changePasswordDto, CancellationToken ct = default)
     {
         throw new NotImplementedException();
     }
 
-    public async Task DeleteAccountAsync(int userId, CancellationToken ct = default)
+    public async Task DeleteAccountAsync(CancellationToken ct = default)
     {
-        var user = await userRepository.GetByIdAsync(userId, ct)
-            ?? throw new KeyNotFoundException($"User with id {userId} doesn't exist");
+        var user = await userRepository.GetByIdAsync(currentUserService.UserId, ct)
+            ?? throw new KeyNotFoundException($"User with id {currentUserService.UserId} doesn't exist");
 
-        await userRepository.DeleteAsync(userId, ct);
+        await userRepository.DeleteAsync(currentUserService.UserId, ct);
         await unitOfWork.CommitAsync(ct);
     }
 
-    public async Task<UserProfileDto> GetUserProfileAsync(int userId, CancellationToken ct = default)
+    public async Task<UserProfileDto> GetUserProfileAsync(CancellationToken ct = default)
     {
-        var user = await userRepository.GetByIdAsync(userId, ct)
-            ?? throw new KeyNotFoundException($"User with id {userId} doesn't exist");
+        var user = await userRepository.GetByIdAsync(currentUserService.UserId, ct)
+            ?? throw new KeyNotFoundException($"User with id {currentUserService.UserId} doesn't exist");
 
         return new UserProfileDto
         {
