@@ -5,10 +5,21 @@ namespace RssReader.Services.Interfaces;
 
 public interface IFeedItemService
 {
-    Task<FeedItemGroupedDto> GetFeedItemsGroupedAsync(int userId, int feedId, int pageNumber = 1, int pageSize = PaginationConstants.DefaultPageSize, CancellationToken ct = default);
-    Task<List<FeedItemDto>> GetFeedItemFilteredAsync(int userId, FeedItemFilterQuery filter, CancellationToken ct = default);
-    Task<FeedItemDto> GetFeedItemAsync(int userId, int feedItemId, CancellationToken ct = default);
-    Task MarkAsReadAsync(int userId, int feedItemId, bool isRead = true, CancellationToken ct = default);
-    Task ChangeFavoriteStatusAsync(int userId, int feedItemId, bool isFavorite, CancellationToken ct = default);
-    Task RemoveFeedItemAsync(int userId, int feedItemId, CancellationToken ct = default);
+    Task<List<FeedItemDto>> GetGlobalFeedItemsAsync(GlobalFeedItemsFilter globalFeedItemsFilter, CancellationToken ct = default);
+    Task<List<FeedItemDto>> GetPersonalFeedItemsAsync(GlobalFeedItemsFilter globalFeedItemsFilter, CancellationToken ct = default);
+    Task<List<FeedItemDto>> GetPersonalFeedItemsFilteredAsync(PersonalFeedItemsFilter personalFeedItemsFilter, CancellationToken ct = default);
+    Task<List<FeedItemDto>> GetFeedItemsByFeedIdAsync(
+        int feedId, 
+        int pageNumber, 
+        int pageSize, 
+        CancellationToken ct = default);
+    Task<FeedItemGroupedDto> GetFeedItemsGroupedByFeedIdAsync(
+        int feedId, 
+        int pageNumber, 
+        int pageSize, 
+        CancellationToken ct = default);
+    Task<FeedItemDto> GetFeedItemAsync(int feedItemId, CancellationToken ct = default);
+    Task MarkAsReadAsync(int feedItemId, bool isRead = true, CancellationToken ct = default);
+    Task ChangeFavoriteStatusAsync(int feedItemId, bool isFavorite, CancellationToken ct = default);
+    Task RemoveFeedItemAsync(int feedItemId, CancellationToken ct = default);
 }

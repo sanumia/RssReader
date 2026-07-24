@@ -4,10 +4,10 @@ namespace RssReader.Services.Interfaces;
 
 public interface IFolderService
 {
-    Task<ResponseFolderDto> CreateFolderAsync(int userId, FolderNameDto createFolderDto, CancellationToken ct = default);
-    Task RenameFolderAsync(int userId, int folderId, FolderNameDto updateFolderDto, CancellationToken ct = default);
-    Task DeleteFolderAsync(int userId, int folderId, CancellationToken ct = default);
-    Task AddFeedToFolderAsync(int userId, int folderId, int feedId, CancellationToken ct = default);
-    Task RemoveFeedFromFolderAsync(int userId, int folderId, int feedId, CancellationToken ct = default);
-    Task<List<ResponseFolderDto>> GetFoldersWithFeedCountsAsync(int userId, CancellationToken ct = default);
+    Task<ResponseFolderDto> CreateFolderAsync(FolderNameDto folderNameDto, CancellationToken ct = default);
+    Task RenameFolderAsync(int folderId, FolderNameDto updateFolderDto, CancellationToken ct = default);
+    Task DeleteFolderAsync(int folderId, CancellationToken ct = default);
+    Task AddFeedToFolderAsync(int folderId, int feedId, CancellationToken ct = default);
+    Task RemoveFeedFromFolderAsync(int folderId, int feedId, CancellationToken ct = default);
+    Task<List<ResponseFolderDto>> GetFoldersWithFeedCountsAsync(CancellationToken ct = default);
 }

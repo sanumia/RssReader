@@ -5,6 +5,7 @@ namespace RssReader.Repositories.Interfaces;
 
 public interface IFeedRepository : IBaseRepository<Feed>
 {
+    Task<List<Feed>> GetAllAsync(CancellationToken ct = default);
     Task<List<Feed>> GetAllByUserIdAsync(int id, CancellationToken ct = default);
     Task<Feed?> GetByUrlAsync(string url, CancellationToken ct = default);
     Task<bool> ExistsByUrlAsync(string url, CancellationToken ct = default);
