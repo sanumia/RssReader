@@ -16,15 +16,9 @@ public class FolderService(
     {
         var folder = await folderRepository.GetByIdAsync(folderId, ct)
             ?? throw new KeyNotFoundException($"Folder with id: {folderId} was not found");
-        if(folder.UserId == userId)
-        {
-            await folderRepository.AddFeedToFolderAsync(feedId, folderId, ct);
-            await unitOfWork.CommitAsync(ct);
-        }
-        else
-        {
-            throw new Exception($"User with Id{userId}  doesn't have this folder");
-        }
+
+        await folderRepository.AddFeedToFolderAsync(feedId, folderId, ct);
+        await unitOfWork.CommitAsync(ct);
     }
 
     public async Task<ResponseFolderDto> CreateFolderAsync(FolderNameDto folderNameDto, CancellationToken ct = default)
@@ -54,15 +48,8 @@ public class FolderService(
         var folder = await folderRepository.GetByIdAsync(folderId, ct)
             ?? throw new KeyNotFoundException($"Folder with id {folderId} not found");
 
-        if(folder.UserId == userId)
-        {
-            await folderRepository.DeleteAsync(folderId, ct);
-            await unitOfWork.CommitAsync(ct);
-        }
-        else
-        {
-            throw new Exception($"User doesn't have this folder");
-        }
+        await folderRepository.DeleteAsync(folderId, ct);
+        await unitOfWork.CommitAsync(ct);
     }
 
     public async Task<List<ResponseFolderDto>> GetFoldersWithFeedCountsAsync(CancellationToken ct = default)
@@ -84,15 +71,8 @@ public class FolderService(
         var folder = await folderRepository.GetByIdAsync(folderId, ct)
             ?? throw new KeyNotFoundException($"Folder with id {folderId} was not found");
 
-        if(folder.UserId == userId)
-        {
-            await folderRepository.RemoveFeedFromFolderAsync(feedId, folderId, ct);
-            await unitOfWork.CommitAsync(ct);
-        }
-        else
-        {
-            throw new Exception($"User doesn't have this folder");
-        }
+        await folderRepository.RemoveFeedFromFolderAsync(feedId, folderId, ct);
+        await unitOfWork.CommitAsync(ct);
     }
 
     public async Task RenameFolderAsync(int folderId, FolderNameDto updateFolderDto, CancellationToken ct = default)
@@ -102,15 +82,8 @@ public class FolderService(
         var folder = await folderRepository.GetByIdAsync(folderId, ct)
             ?? throw new KeyNotFoundException($"Folder with id {folderId} was not found");
 
-        if (folder.UserId == userId)
-        {
-            folder.Name  = updateFolderDto.Name;
-            await folderRepository.UpdateAsync(folder, ct);
-            await unitOfWork.CommitAsync(ct);
-        }
-        else
-        {
-            throw new Exception($"User doesn't have this folder");
-        }
+        folder.Name  = updateFolderDto.Name;
+        await folderRepository.UpdateAsync(folder, ct);
+        await unitOfWork.CommitAsync(ct);
     }
 }
