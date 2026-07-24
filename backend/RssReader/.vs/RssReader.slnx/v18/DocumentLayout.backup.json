@@ -1,0 +1,326 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Internship\\RssReader\\backend\\RssReader\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|c:\\internship\\rssreader\\backend\\rssreader\\rssreader\\services\\feeditemservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|solutionrelative:rssreader\\services\\feeditemservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|c:\\internship\\rssreader\\backend\\rssreader\\rssreader\\services\\interfaces\\ifeeditemservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|solutionrelative:rssreader\\services\\interfaces\\ifeeditemservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|c:\\internship\\rssreader\\backend\\rssreader\\rssreader\\repositories\\feeditemrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|solutionrelative:rssreader\\repositories\\feeditemrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|c:\\internship\\rssreader\\backend\\rssreader\\rssreader\\services\\feedservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|solutionrelative:rssreader\\services\\feedservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|c:\\internship\\rssreader\\backend\\rssreader\\rssreader\\mapping\\feeditemmappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|solutionrelative:rssreader\\mapping\\feeditemmappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|c:\\internship\\rssreader\\backend\\rssreader\\rssreader\\services\\currentuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|solutionrelative:rssreader\\services\\currentuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|c:\\internship\\rssreader\\backend\\rssreader\\rssreader\\repositories\\feedrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|solutionrelative:rssreader\\repositories\\feedrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|c:\\internship\\rssreader\\backend\\rssreader\\rssreader\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|solutionrelative:rssreader\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|c:\\internship\\rssreader\\backend\\rssreader\\rssreader\\controllers\\feeditemcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|solutionrelative:rssreader\\controllers\\feeditemcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|c:\\internship\\rssreader\\backend\\rssreader\\rssreader\\controllers\\foldercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|solutionrelative:rssreader\\controllers\\foldercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|c:\\internship\\rssreader\\backend\\rssreader\\rssreader\\controllers\\feedfeeditemlistingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|solutionrelative:rssreader\\controllers\\feedfeeditemlistingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|c:\\internship\\rssreader\\backend\\rssreader\\rssreader\\controllers\\feedcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|solutionrelative:rssreader\\controllers\\feedcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|c:\\internship\\rssreader\\backend\\rssreader\\rssreader\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|solutionrelative:rssreader\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|c:\\internship\\rssreader\\backend\\rssreader\\rssreader\\services\\interfaces\\ifeedservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|solutionrelative:rssreader\\services\\interfaces\\ifeedservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|c:\\internship\\rssreader\\backend\\rssreader\\rssreader\\dtos\\feeditem\\personalfeeditemsfilter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|solutionrelative:rssreader\\dtos\\feeditem\\personalfeeditemsfilter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|c:\\internship\\rssreader\\backend\\rssreader\\rssreader\\dtos\\feeditem\\globalfeeditemsfilter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|solutionrelative:rssreader\\dtos\\feeditem\\globalfeeditemsfilter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|c:\\internship\\rssreader\\backend\\rssreader\\rssreader\\dtos\\feeditem\\feeditemgroupeddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|solutionrelative:rssreader\\dtos\\feeditem\\feeditemgroupeddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|c:\\internship\\rssreader\\backend\\rssreader\\rssreader\\dtos\\feeditem\\feeditemfilterquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4297AFE7-F44B-6996-4544-3933A51B3E59}|RssReader\\RssReader.csproj|solutionrelative:rssreader\\dtos\\feeditem\\feeditemfilterquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "FeedService.cs",
+              "DocumentMoniker": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\Services\\FeedService.cs",
+              "RelativeDocumentMoniker": "RssReader\\Services\\FeedService.cs",
+              "ToolTip": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\Services\\FeedService.cs",
+              "RelativeToolTip": "RssReader\\Services\\FeedService.cs",
+              "ViewState": "AgIAAFcAAAAAAAAAAAA7wG0AAABOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-20T06:30:07.623Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "FeedItemMappingProfile.cs",
+              "DocumentMoniker": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\Mapping\\FeedItemMappingProfile.cs",
+              "RelativeDocumentMoniker": "RssReader\\Mapping\\FeedItemMappingProfile.cs",
+              "ToolTip": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\Mapping\\FeedItemMappingProfile.cs",
+              "RelativeToolTip": "RssReader\\Mapping\\FeedItemMappingProfile.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-20T05:36:56.977Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CurrentUserService.cs",
+              "DocumentMoniker": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\Services\\CurrentUserService.cs",
+              "RelativeDocumentMoniker": "RssReader\\Services\\CurrentUserService.cs",
+              "ToolTip": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\Services\\CurrentUserService.cs",
+              "RelativeToolTip": "RssReader\\Services\\CurrentUserService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-17T09:09:25.541Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FeedItemRepository.cs",
+              "DocumentMoniker": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\Repositories\\FeedItemRepository.cs",
+              "RelativeDocumentMoniker": "RssReader\\Repositories\\FeedItemRepository.cs",
+              "ToolTip": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\Repositories\\FeedItemRepository.cs",
+              "RelativeToolTip": "RssReader\\Repositories\\FeedItemRepository.cs",
+              "ViewState": "AgIAAEMAAAAAAAAAAAAkwDAAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-17T09:00:52.069Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "FeedRepository.cs",
+              "DocumentMoniker": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\Repositories\\FeedRepository.cs",
+              "RelativeDocumentMoniker": "RssReader\\Repositories\\FeedRepository.cs",
+              "ToolTip": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\Repositories\\FeedRepository.cs",
+              "RelativeToolTip": "RssReader\\Repositories\\FeedRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-17T09:00:50.8Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\Program.cs",
+              "RelativeDocumentMoniker": "RssReader\\Program.cs",
+              "ToolTip": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\Program.cs",
+              "RelativeToolTip": "RssReader\\Program.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABgAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-17T09:00:11.166Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FeedItemService.cs",
+              "DocumentMoniker": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\Services\\FeedItemService.cs",
+              "RelativeDocumentMoniker": "RssReader\\Services\\FeedItemService.cs",
+              "ToolTip": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\Services\\FeedItemService.cs",
+              "RelativeToolTip": "RssReader\\Services\\FeedItemService.cs",
+              "ViewState": "AgIAAE4AAAAAAAAAAAAswKQAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-17T08:51:01.454Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "IFeedItemService.cs",
+              "DocumentMoniker": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\Services\\Interfaces\\IFeedItemService.cs",
+              "RelativeDocumentMoniker": "RssReader\\Services\\Interfaces\\IFeedItemService.cs",
+              "ToolTip": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\Services\\Interfaces\\IFeedItemService.cs",
+              "RelativeToolTip": "RssReader\\Services\\Interfaces\\IFeedItemService.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAxwAwAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-17T08:46:37.118Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "IFeedService.cs",
+              "DocumentMoniker": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\Services\\Interfaces\\IFeedService.cs",
+              "RelativeDocumentMoniker": "RssReader\\Services\\Interfaces\\IFeedService.cs",
+              "ToolTip": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\Services\\Interfaces\\IFeedService.cs",
+              "RelativeToolTip": "RssReader\\Services\\Interfaces\\IFeedService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-17T08:46:36.286Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "PersonalFeedItemsFilter.cs",
+              "DocumentMoniker": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\DTOs\\FeedItem\\PersonalFeedItemsFilter.cs",
+              "RelativeDocumentMoniker": "RssReader\\DTOs\\FeedItem\\PersonalFeedItemsFilter.cs",
+              "ToolTip": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\DTOs\\FeedItem\\PersonalFeedItemsFilter.cs",
+              "RelativeToolTip": "RssReader\\DTOs\\FeedItem\\PersonalFeedItemsFilter.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-17T08:44:13.639Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "GlobalFeedItemsFilter.cs",
+              "DocumentMoniker": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\DTOs\\FeedItem\\GlobalFeedItemsFilter.cs",
+              "RelativeDocumentMoniker": "RssReader\\DTOs\\FeedItem\\GlobalFeedItemsFilter.cs",
+              "ToolTip": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\DTOs\\FeedItem\\GlobalFeedItemsFilter.cs",
+              "RelativeToolTip": "RssReader\\DTOs\\FeedItem\\GlobalFeedItemsFilter.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-17T08:43:42.886Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "FeedItemGroupedDto.cs",
+              "DocumentMoniker": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\DTOs\\FeedItem\\FeedItemGroupedDto.cs",
+              "RelativeDocumentMoniker": "RssReader\\DTOs\\FeedItem\\FeedItemGroupedDto.cs",
+              "ToolTip": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\DTOs\\FeedItem\\FeedItemGroupedDto.cs",
+              "RelativeToolTip": "RssReader\\DTOs\\FeedItem\\FeedItemGroupedDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-17T08:43:15.213Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "FeedItemFilterQuery.cs",
+              "DocumentMoniker": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\DTOs\\FeedItem\\FeedItemFilterQuery.cs",
+              "RelativeDocumentMoniker": "RssReader\\DTOs\\FeedItem\\FeedItemFilterQuery.cs",
+              "ToolTip": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\DTOs\\FeedItem\\FeedItemFilterQuery.cs",
+              "RelativeToolTip": "RssReader\\DTOs\\FeedItem\\FeedItemFilterQuery.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-17T08:43:02.748Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "FolderController.cs",
+              "DocumentMoniker": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\Controllers\\FolderController.cs",
+              "RelativeDocumentMoniker": "RssReader\\Controllers\\FolderController.cs",
+              "ToolTip": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\Controllers\\FolderController.cs",
+              "RelativeToolTip": "RssReader\\Controllers\\FolderController.cs",
+              "ViewState": "AgIAACsAAAAAAAAAAAAkwD8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-17T08:35:05.193Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "FeedController.cs",
+              "DocumentMoniker": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\Controllers\\FeedController.cs",
+              "RelativeDocumentMoniker": "RssReader\\Controllers\\FeedController.cs",
+              "ToolTip": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\Controllers\\FeedController.cs",
+              "RelativeToolTip": "RssReader\\Controllers\\FeedController.cs",
+              "ViewState": "AgIAACMAAAAAAAAAAAAgwBUAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-17T08:34:51.971Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "FeedItemController.cs",
+              "DocumentMoniker": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\Controllers\\FeedItemController.cs",
+              "RelativeDocumentMoniker": "RssReader\\Controllers\\FeedItemController.cs",
+              "ToolTip": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\Controllers\\FeedItemController.cs",
+              "RelativeToolTip": "RssReader\\Controllers\\FeedItemController.cs",
+              "ViewState": "AgIAACYAAAAAAAAAAAAgwD0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-17T08:34:35.345Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "RssReader\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "RssReader\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-17T08:34:31.469Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "FeedFeedItemListingController.cs",
+              "DocumentMoniker": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\Controllers\\FeedFeedItemListingController.cs",
+              "RelativeDocumentMoniker": "RssReader\\Controllers\\FeedFeedItemListingController.cs",
+              "ToolTip": "C:\\Internship\\RssReader\\backend\\RssReader\\RssReader\\Controllers\\FeedFeedItemListingController.cs",
+              "RelativeToolTip": "RssReader\\Controllers\\FeedFeedItemListingController.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABAAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-17T08:28:40.443Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
