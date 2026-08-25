@@ -68,6 +68,18 @@ export const removeFeed = createAsyncThunk(
     }
 );
 
+export const getAllFeedsWithUserInfo = createAsyncThunk(
+    'feeds/getAllFeedsWithUserInfo',
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await api.get(urls.GET_ALL_FEEDS_WITH_USER_INFO_URL);
+            return response.data;
+        } catch (err) {
+            return rejectWithValue(err.response?.data?.message || err.message);
+        }
+    }
+);
+
 const feedsSlice = createSlice({
     name: 'feeds',
     initialState:{
@@ -126,6 +138,18 @@ const feedsSlice = createSlice({
         })
         .addCase(getAllFeeds.rejected, (state, action) => { 
             state.loading = false; state.error = action.payload; 
+        })
+        .addCase(getAllFeedsWithUserInfo.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+        })
+        .addCase(getAllFeedsWithUserInfo.fulfilled, (state, action) => {
+            state.loading = false;
+            state.list = action.payload;
+        })
+        .addCase(getAllFeedsWithUserInfo.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
         });
     },
 });

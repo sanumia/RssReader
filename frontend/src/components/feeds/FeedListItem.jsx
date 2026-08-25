@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 const IMAGE_SIZE = 20;
 
-export default function FeedListItem({ feed, onEdit, onDelete }) {
+export default function FeedListItem({ feed, onEdit, onDelete, canManage }) {
     const {
         id,
         title,
@@ -45,10 +45,14 @@ export default function FeedListItem({ feed, onEdit, onDelete }) {
                 )
             }
             <span className="feed-item__title">{title}</span>
-            <span className="feed-item__category">{folders}</span>
-            <span className="feed-item__count">{feedItemCount} news</span>
-            <button onClick={handleEditClick}>Edit</button>
-            <button onClick={handleDeleteClick}>Delete</button>
+            {
+                canManage && (
+                    <>
+                        <button onClick={handleEditClick}>Edit</button>
+                        <button onClick={handleDeleteClick}>Delete</button>
+                    </>
+                )
+            }
         </div>
     );
 }

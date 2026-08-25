@@ -3,6 +3,7 @@ const GET_FEEDS_URL = '/feeds';
 const ADD_FEED_URL = '/feeds';
 const EDIT_FEED_URL = (id) => `/feeds/${id}`;
 const REMOVE_FEED_URL = (id) => `/feeds/${id}`;
+const GET_ALL_FEEDS_WITH_USER_INFO_URL = '/feeds/all-user';
 
 const GET_PROFILE_URL = '/user/admin';
 const UPDATE_PROFILE_URL = '/user/admin';
@@ -16,7 +17,7 @@ const GET_GLOBAL_ITEMS_URL = '/feed-items/global';
 const GET_PERSONAL_ITEMS_URL = '/feed-items/personal';
 const GET_PERSONAL_ITEMS_FILTERED_URL = '/feed-items/filtered';
 const GET_ITEM_URL = (itemId) => `/feed-items/${itemId}`;
-const UPDATE_ITEM_URL = (id) => `/api/feed-items/${id}`;
+const UPDATE_ITEM_URL = (itemId) => `/feed-items/${itemId}`;
 const MARK_ITEM_READ_URL = (itemId) => `/feed-items/${itemId}/read`;
 const TOGGLE_ITEM_FAVORITE_URL = (itemId) => `/feed-items/${itemId}/favorite`;
 const REMOVE_ITEM_URL = (itemId) => `/feed-items/${itemId}`;
@@ -39,6 +40,7 @@ export default {
     ADD_FEED_URL,
     EDIT_FEED_URL,
     REMOVE_FEED_URL,
+    GET_ALL_FEEDS_WITH_USER_INFO_URL,
 
     GET_PROFILE_URL,
     DELETE_ACCOUNT_URL,

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'; 
-import { getPersonalItems, removeItem, toggleItemFavorite, markItemRead } from 'Actions/feedItemsActions';
+import { getGlobalItems, removeItem, toggleItemFavorite, markItemRead } from 'Actions/feedItemsActions';
 import FeedItemFilters from 'Components/feeditems/FeedItemFilters';
 
 export default function AllFeedItems() {
@@ -17,7 +17,7 @@ export default function AllFeedItems() {
     });
 
     useEffect(() => {
-        dispatch(getPersonalItems(filters));
+        dispatch(getGlobalItems(filters));
     }, [dispatch, filters]);
 
     const createMarkReadHandler = useCallback((item) => () => {

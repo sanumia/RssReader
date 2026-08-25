@@ -28,6 +28,7 @@ export default function Dashboard() {
 
     const handleAdd = (url) => {
         dispatch(addFeed({ url }));
+        dispatch(getAllFeeds());
         setEditingFeed(null);
     };
 
@@ -44,6 +45,12 @@ export default function Dashboard() {
 
     return (
         <div className="dashboard">
+            {!isAuthenticated && (
+                    <p className="dashboard__empty">
+                        <Link to="/login">Log in</Link> or{' '}
+                        <Link to="/register">create an account</Link> to add and manage your own feeds.
+                    </p>
+                )}
             <section className="dashboard__section">
                 <div className="dashboard__section-header">
                     <h2 className="dashboard__title">Feeds</h2>
@@ -57,13 +64,6 @@ export default function Dashboard() {
                         )
                     }
                 </div>
-
-                {/* {!isAuthenticated && (
-                    <p className="dashboard__empty">
-                        <Link to="/login">Log in</Link> or{' '}
-                        <Link to="/register">create an account</Link> to add and manage your own feeds.
-                    </p>
-                )} */}
 
                 {
                     isAuthenticated && isEditing

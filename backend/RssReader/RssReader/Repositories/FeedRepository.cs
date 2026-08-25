@@ -78,4 +78,25 @@ public class FeedRepository(RssReaderDbContext context) : BaseRepository<Feed>(c
             })
             .ToListAsync(ct);
     }
+
+    public async Task<List<FeedGlobalDto>> GetAllFeedsWithUserInfoAsync(
+        int userId,
+        CancellationToken ct = default)
+    {
+        return await context.Feeds
+            .Select(f => new FeedGlobalDto
+            {
+                Id = f.Id,
+                Url = f.Url,
+                Title = f.Title,
+                IconUrl = f.IconUrl,
+                FeedItemCount = f.FeedItems.Count,
+                IsSubscribed = f.UserFeeds.Any(uf => uf.UserId == userId),
+                FolderNames = f.FeedFolders
+                    .Where(ff => ff.Folder.UserId == userId)
+                    .Select(ff => ff.Folder.Name)
+                    .ToList()
+            })
+            .ToListAsync(ct);
+    }
 }

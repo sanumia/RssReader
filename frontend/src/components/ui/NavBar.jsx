@@ -11,12 +11,18 @@ export default function NavBar() {
                 <li>
                     <NavLink to="/">Home</NavLink>
                 </li>
-                <li>
-                    <NavLink to="/feeds">Feeds</NavLink>
-                </li>
-                <li>
-                    <NavLink to="/feed-items">Feed Items List</NavLink>
-                </li>
+                {
+                    isAuthenticated && (
+                        <>
+                            <li>
+                                <NavLink to="/feeds">Feeds</NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/feed-items">Feed Items List</NavLink>
+                            </li>
+                        </>
+                    )
+                }
 
                 <li className="navMenu__spacer" />
 

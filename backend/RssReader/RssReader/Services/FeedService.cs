@@ -114,5 +114,10 @@ public class FeedService(
         return mapper.Map<ResponseFeedDto>(feed);
     }
 
+    public async Task<List<FeedGlobalDto>> GetAllFeedsWithUserInfoAsync(CancellationToken ct = default)
+    {
+        return await feedRepository.GetAllFeedsWithUserInfoAsync(currentUserService.UserId, ct);
+    }
+
     private Task<bool> ValidateFeedAsync(string url) => Task.FromResult(true);
 }

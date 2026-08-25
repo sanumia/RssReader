@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getAllFeeds, removeFeed } from 'Actions/feedsActions';
+import { getAllFeedsWithUserInfo, removeFeed } from 'Actions/feedsActions';
 import FeedForm from 'Components/feeds/FeedForm';
 import { getFolders } from 'Reducers/foldersReducer';
 import AddToFolderButton from 'Components/feeds/AddToFolderButton';
@@ -12,7 +12,7 @@ export default function Feeds() {
     const [editingFeed, setEditingFeed] = useState(null);
 
     useEffect(() => {
-        dispatch(getAllFeeds());
+        dispatch(getAllFeedsWithUserInfo());
         dispatch(getFolders());
     }, [dispatch]);
 
@@ -65,7 +65,7 @@ export default function Feeds() {
                         <Link to={`/feeds/${feed.id}`} className="feed-item__title">
                             {feed.title || feed.url}
                         </Link>
-                        <span className="feed-item__count">{feed.totalNewsCount ?? 0} news</span>
+                        <span className="feed-item__count">{feed.feedItemCount ?? 0} news</span>
                         <div className="feed-item__actions">
                             <AddToFolderButton feedId={feed.id} />
                             <button className="ghost" onClick={() => setEditingFeed(feed)}>Edit</button>

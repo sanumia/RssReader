@@ -6,4 +6,5 @@ export {
     removeFeed,
     selectFeed,
     clearFeedsError,
+    getAllFeedsWithUserInfo,
 } from 'Reducers/feedsReducer';
