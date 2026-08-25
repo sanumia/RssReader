@@ -58,12 +58,12 @@ export default function Dashboard() {
                     }
                 </div>
 
-                {!isAuthenticated && (
+                {/* {!isAuthenticated && (
                     <p className="dashboard__empty">
                         <Link to="/login">Log in</Link> or{' '}
                         <Link to="/register">create an account</Link> to add and manage your own feeds.
                     </p>
-                )}
+                )} */}
 
                 {
                     isAuthenticated && isEditing
@@ -90,7 +90,7 @@ export default function Dashboard() {
                 }
 
                 {
-                    isAuthenticated && feeds.map((feed) => (
+                    feeds.map((feed) => (
                         <FeedListItem
                             key={feed.id}
                             feed={feed}
