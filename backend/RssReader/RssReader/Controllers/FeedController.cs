@@ -13,6 +13,7 @@ namespace RssReader.Controllers;
 [Route("api/feeds")]
 public class FeedController(IFeedService feedService) : ControllerBase
 {
+    [AllowAnonymous]
     [HttpGet("all")]
     public async Task<IActionResult> GetAllFeedsAsync(CancellationToken ct)
     {

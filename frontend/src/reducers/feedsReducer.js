@@ -2,6 +2,19 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import api from '../utils/api'
 import urls from '../utils/urls'
 
+
+export const getAllFeeds = createAsyncThunk(
+    'feeds/getAllFeeds',
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await api.get(urls.GET_ALL_FEEDS_URL);
+            return response.data;
+        } catch (err) {
+            return rejectWithValue(err.response?.data?.message || err.message);
+        }
+    }
+);
+
 export const getFeeds = createAsyncThunk(
     'feeds/getFeeds',
     async (_, { rejectWithValue }) => {
@@ -104,6 +117,15 @@ const feedsSlice = createSlice({
         })
         .addCase(removeFeed.rejected, (state,action) => {
             state.error = action.payload;
+        })
+        .addCase(getAllFeeds.pending, (state) => { 
+            state.loading = true; state.error = null; 
+        })
+        .addCase(getAllFeeds.fulfilled, (state, action) => { 
+            state.loading = false; state.list = action.payload; 
+        })
+        .addCase(getAllFeeds.rejected, (state, action) => { 
+            state.loading = false; state.error = action.payload; 
         });
     },
 });

@@ -21,5 +21,8 @@ public class FeedItemMappingProfile : Profile
                     src.UserFeedItems.Any(uf => uf.UserId == (int)ctx.Items["UserId"] && uf.IsFavorite)));
 
         CreateMap<CreateFeedItemDto, FeedItem>();
+
+        CreateMap<UpdateFeedItemDto, FeedItem>()
+            .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
     }
 }

@@ -16,9 +16,6 @@ export default function FeedItemsByFeed() {
 
     useEffect(() => {
         dispatch(getItemsByFeedGrouped({ feedId: Number(feedId) }));
-        if (feeds.length === 0) {
-            dispatch(getFeeds());
-        }
     }, [dispatch, feedId]);
 
     const sections = [

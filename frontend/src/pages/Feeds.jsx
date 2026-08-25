@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getFeeds, removeFeed } from 'Actions/feedsActions';
+import { getAllFeeds, removeFeed } from 'Actions/feedsActions';
 import FeedForm from 'Components/feeds/FeedForm';
 import { getFolders } from 'Reducers/foldersReducer';
 import AddToFolderButton from 'Components/feeds/AddToFolderButton';
@@ -12,7 +12,7 @@ export default function Feeds() {
     const [editingFeed, setEditingFeed] = useState(null);
 
     useEffect(() => {
-        dispatch(getFeeds());
+        dispatch(getAllFeeds());
         dispatch(getFolders());
     }, [dispatch]);
 

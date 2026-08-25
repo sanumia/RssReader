@@ -68,7 +68,7 @@ input {
 }
 
 .navMenu {
-    background: white;
+    background: #ffffff;
     border-bottom: 1px solid #e2e5ea;
     padding: 10px 30px;
 
@@ -93,29 +93,39 @@ input {
     position: relative;
 
     &__trigger {
-        background: transparent;
+        background: #ffffff;
         color: #1a1d23;
         border: 1px solid #e2e5ea;
+        padding: 10px 14px;
+        border-radius: 6px;
     }
 
     &__dropdown {
+        display: flex;    
+        flex-direction: column;  
         position: absolute;
         right: 0;
         top: calc(100% + 6px);
-        background: white;
+        background: #ffffff;
         border: 1px solid #e2e5ea;
         border-radius: 6px;
         min-width: 160px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         padding: 6px;
+        list-style: none;
         z-index: 10;
+
+        li {
+            width: 100%;
+            background: #ffffff;
+        }
 
         a, button {
         display: block;
         width: 100%;
         text-align: left;
         padding: 8px 10px;
-        background: transparent;
+        background: #ffffff;
         color: #1a1d23;
         border-radius: 4px;
 
@@ -433,12 +443,6 @@ input {
     margin-top: 8px;
 }
 
-.item-card {
-    padding: 14px 0;
-    border-bottom: 1px solid #e2e5ea;
-    overflow: hidden;
-}
-
 .item-card__title {
     font-size: 15px;
     font-weight: 600;
@@ -464,7 +468,7 @@ input {
     width: 200px;
     height: 200px;
     border-radius: 8px;
-    object-fit: cover;
+    object-fit: contain;
     flex-shrink: 0;
     background: #f0f1f3;
     border: 1px solid #e2e5ea;
@@ -473,7 +477,7 @@ input {
 .item-card__icon {
     width: 100%;
     max-height: 400px;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 8px;
     margin-bottom: 10px;
     background: #f0f1f3;

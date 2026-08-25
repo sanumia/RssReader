@@ -1,3 +1,4 @@
+const GET_ALL_FEEDS_URL = '/feeds/all';
 const GET_FEEDS_URL = '/feeds';
 const ADD_FEED_URL = '/feeds';
 const EDIT_FEED_URL = (id) => `/feeds/${id}`;
@@ -15,6 +16,7 @@ const GET_GLOBAL_ITEMS_URL = '/feed-items/global';
 const GET_PERSONAL_ITEMS_URL = '/feed-items/personal';
 const GET_PERSONAL_ITEMS_FILTERED_URL = '/feed-items/filtered';
 const GET_ITEM_URL = (itemId) => `/feed-items/${itemId}`;
+const UPDATE_ITEM_URL = (id) => `/api/feed-items/${id}`;
 const MARK_ITEM_READ_URL = (itemId) => `/feed-items/${itemId}/read`;
 const TOGGLE_ITEM_FAVORITE_URL = (itemId) => `/feed-items/${itemId}/favorite`;
 const REMOVE_ITEM_URL = (itemId) => `/feed-items/${itemId}`;
@@ -32,6 +34,7 @@ const REMOVE_FEED_FROM_FOLDER_URL = (folderId, feedId) => `/folders/${folderId}/
 const GET_FEEDS_IN_FOLDER_URL = (folderId) => `/folders/${folderId}/feeds`;
 
 export default {
+    GET_ALL_FEEDS_URL,
     GET_FEEDS_URL,
     ADD_FEED_URL,
     EDIT_FEED_URL,
@@ -49,6 +52,7 @@ export default {
     GET_PERSONAL_ITEMS_URL, 
     GET_PERSONAL_ITEMS_FILTERED_URL,
     GET_ITEM_URL, 
+    UPDATE_ITEM_URL,
     MARK_ITEM_READ_URL, 
     TOGGLE_ITEM_FAVORITE_URL, 
     REMOVE_ITEM_URL,

@@ -1,4 +1,5 @@
 export {
+    getAllFeeds,
     getFeeds,
     addFeed,
     editFeed,

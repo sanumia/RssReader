@@ -5,6 +5,7 @@ export {
     getItemsByFeedGrouped,
     getItemsByFeed,
     addItemToFeed,
+    updateFeedItem,
     markItemRead,
     toggleItemFavorite,
     removeItem,

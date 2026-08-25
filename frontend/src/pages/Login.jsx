@@ -1,4 +1,4 @@
-import { login } from 'Actions/authActions';
+import { login, clearAuthError } from 'Actions/authActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 
@@ -18,6 +18,16 @@ export default function Login() {
         dispatch(login({ email, password }));
     }
 
+    const handleEmailChange = (e) => {
+        setEmail(e.target.value);
+        if (error) dispatch(clearAuthError());
+    };
+
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value);
+        if (error) dispatch(clearAuthError());
+    };
+
     if(isAuthenticated) {
         return (
             <div className="auth-page">
@@ -33,14 +43,14 @@ export default function Login() {
                 <input 
                     type="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={handleEmailChange}
                     placeholder="Email"
                     required 
                 />
                 <input 
                     type="password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={handlePasswordChange}
                     placeholder="Password"
                     required 
                 />

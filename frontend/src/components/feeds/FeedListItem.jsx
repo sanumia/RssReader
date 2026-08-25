@@ -18,6 +18,16 @@ export default function FeedListItem({ feed, onEdit, onDelete }) {
         navigate(`/feeds/${feed.id}`);
     };
 
+    const handleEditClick = (e) => {
+        e.stopPropagation();
+        onEdit(feed);
+    };
+
+    const handleDeleteClick = (e) => {
+        e.stopPropagation();
+        onDelete(id);
+    };
+
     return (
         <div 
             className="feed-item" 
@@ -37,8 +47,8 @@ export default function FeedListItem({ feed, onEdit, onDelete }) {
             <span className="feed-item__title">{title}</span>
             <span className="feed-item__category">{folders}</span>
             <span className="feed-item__count">{feedItemCount} news</span>
-            <button onClick={() => onEdit(feed)}>Edit</button>
-            <button onClick={() => onDelete(id)}>Delete</button>
+            <button onClick={handleEditClick}>Edit</button>
+            <button onClick={handleDeleteClick}>Delete</button>
         </div>
     );
 }

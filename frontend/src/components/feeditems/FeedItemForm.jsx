@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { addItemToFeed } from 'Actions/feedItemsActions';
+import { addItemToFeed, updateFeedItem } from 'Actions/feedItemsActions';
 import { useForm } from 'Hooks/useForm';
 
 
@@ -12,7 +12,7 @@ const INITIAL = {
     iconUrl: '',
 };
 
-export default function FeedItemForm({ feedId, onDone }) {
+export default function FeedItemForm({ feedId, initialData = null, onDone }) {
     const dispatch = useDispatch();
     const { 
         values: {
@@ -28,10 +28,28 @@ export default function FeedItemForm({ feedId, onDone }) {
     } = useForm(INITIAL);
 
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+
+    const isEditing = !!initialData;
+
+    useEffect(() => {
+        if (initialData) {
+            setValues({
+                title: initialData.title || '',
+                description: initialData.description || '',
+                link: initialData.link || '',
+                publishDate: initialData.publishDate 
+                    ? new Date(initialData.publishDate).toISOString().slice(0, 16)
+                    : '',
+                iconUrl: initialData.iconUrl || '',
+            });
+        }
+    }, [initialData, setValues]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError(null);
+        setLoading(true); 
 
         const item = {
             Title: title,
@@ -43,13 +61,23 @@ export default function FeedItemForm({ feedId, onDone }) {
             IconUrl: iconUrl || null,
         };
 
-        const result = await dispatch(addItemToFeed({ feedId, item }));
+        try {
+            let result;
+            if (isEditing) {
+                result = await dispatch(updateFeedItem({ 
+                    itemId: initialData.id, 
+                    updates: item 
+                })).unwrap();
+            } else {
+                result = await dispatch(addItemToFeed({ feedId, item })).unwrap();
+            }
 
-        if (result.meta.requestStatus === 'fulfilled') {
             reset();
             onDone();
-        } else {
-            setError(result.payload || 'Something went wrong');
+        } catch (err) {
+            setError(err || 'Something went wrong');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -94,10 +122,14 @@ export default function FeedItemForm({ feedId, onDone }) {
             />
 
             <div className="form-row">
-                <button type="submit">Add Item</button>
+                <button type="submit" disabled={loading}>
+                    {loading ? 'Saving...' : isEditing ? 'Update Item' : 'Add Item'}
+                </button>
                 <button 
                     type="button" 
-                    className="ghost" onClick={onDone}
+                    className="ghost" 
+                    onClick={onDone}
+                    disabled={loading}
                 >
                     Cancel
                 </button>
