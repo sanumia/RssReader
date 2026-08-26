@@ -1,5 +1,8 @@
+import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import React from 'react'
 const IMAGE_SIZE = 20;
+
 
 export default function FeedListItem({ feed, onEdit, onDelete, canManage }) {
     const {
@@ -18,15 +21,15 @@ export default function FeedListItem({ feed, onEdit, onDelete, canManage }) {
         navigate(`/feeds/${feed.id}`);
     };
 
-    const handleEditClick = (e) => {
+    const handleEditClick = useCallback( (e) => {
         e.stopPropagation();
         onEdit(feed);
-    };
+    }, [feed, onEdit]);
 
-    const handleDeleteClick = (e) => {
+    const handleDeleteClick = useCallback((e) => {
         e.stopPropagation();
         onDelete(id);
-    };
+    }, [id, onDelete]);
 
     return (
         <div 
@@ -47,10 +50,10 @@ export default function FeedListItem({ feed, onEdit, onDelete, canManage }) {
             <span className="feed-item__title">{title}</span>
             {
                 canManage && (
-                    <>
+                    <React.Fragment>
                         <button onClick={handleEditClick}>Edit</button>
                         <button onClick={handleDeleteClick}>Delete</button>
-                    </>
+                    </React.Fragment>
                 )
             }
         </div>

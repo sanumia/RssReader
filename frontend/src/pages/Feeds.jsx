@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getAllFeedsWithUserInfo, removeFeed } from 'Actions/feedsActions';
@@ -18,9 +18,15 @@ export default function Feeds() {
 
     const handleDelete = (id) => {
         if (window.confirm('Delete this feed and all its items?')) {
-            dispatch(removeFeed(id));
+            dispatch(removeFeed(id)).then(() => {
+            dispatch(getAllFeedsWithUserInfo());
+        });
         }
     };
+
+    const handleEdit = useCallback(() => {
+        setEditingFeed(feed);
+    }, [feed]);
 
     return (
         <div className="page">
@@ -68,8 +74,14 @@ export default function Feeds() {
                         <span className="feed-item__count">{feed.feedItemCount ?? 0} news</span>
                         <div className="feed-item__actions">
                             <AddToFolderButton feedId={feed.id} />
-                            <button className="ghost" onClick={() => setEditingFeed(feed)}>Edit</button>
-                            <button className="danger" onClick={() => handleDelete(feed.id)}>Delete</button>
+                            {
+                                feed.isSubscribed && (
+                                    <>
+                                        <button className="ghost" onClick={handleEdit}>Edit</button>
+                                        <button className="danger" onClick={() => handleDelete(feed.id)}>Delete</button>
+                                    </>
+                                )
+                            }
                         </div>
                     </div>
                 ))}

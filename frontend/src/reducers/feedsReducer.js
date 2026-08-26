@@ -8,6 +8,7 @@ export const getAllFeeds = createAsyncThunk(
     async (_, { rejectWithValue }) => {
         try {
             const response = await api.get(urls.GET_ALL_FEEDS_URL);
+            
             return response.data;
         } catch (err) {
             return rejectWithValue(err.response?.data?.message || err.message);
@@ -20,6 +21,7 @@ export const getFeeds = createAsyncThunk(
     async (_, { rejectWithValue }) => {
         try {
             const response = await api.get(urls.GET_FEEDS_URL);
+
             return response.data;
         } catch (err) {
             return rejectWithValue(err.response?.data?.message || err.message);

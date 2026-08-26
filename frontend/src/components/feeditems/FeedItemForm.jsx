@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { addItemToFeed, updateFeedItem } from 'Actions/feedItemsActions';
 import { useForm } from 'Hooks/useForm';
@@ -12,7 +12,7 @@ const INITIAL = {
     iconUrl: '',
 };
 
-export default function FeedItemForm({ feedId, initialData = null, onDone }) {
+export default function FeedItemForm({ feedId, onDone, initialData = null }) {
     const dispatch = useDispatch();
     const { 
         values: {
@@ -46,7 +46,7 @@ export default function FeedItemForm({ feedId, initialData = null, onDone }) {
         }
     }, [initialData, setValues]);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = useCallback( async (e) => {
         e.preventDefault();
         setError(null);
         setLoading(true); 
@@ -79,7 +79,17 @@ export default function FeedItemForm({ feedId, initialData = null, onDone }) {
         } finally {
             setLoading(false);
         }
-    };
+    }, [dispatch,
+        feedId,
+        initialData,        
+        title,
+        description,
+        link,
+        publishDate,
+        iconUrl,
+        reset,              
+        onDone ]
+    );
 
     return (
         <form 
@@ -122,7 +132,10 @@ export default function FeedItemForm({ feedId, initialData = null, onDone }) {
             />
 
             <div className="form-row">
-                <button type="submit" disabled={loading}>
+                <button 
+                    type="submit" 
+                    disabled={loading}
+                >
                     {loading ? 'Saving...' : isEditing ? 'Update Item' : 'Add Item'}
                 </button>
                 <button 

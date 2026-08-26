@@ -132,6 +132,7 @@ export const updateFeedItem = createAsyncThunk(
     async ({ itemId, updates }, { rejectWithValue }) => {
         try {
             const response = await api.put(urls.UPDATE_ITEM_URL(itemId), updates);
+            
             return response.data;
         } catch (err) {
             return rejectWithValue(err.response?.data?.message || err.message);

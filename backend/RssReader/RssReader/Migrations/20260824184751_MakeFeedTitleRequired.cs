@@ -2,21 +2,21 @@
 
 #nullable disable
 
-namespace RssReader.Migrations
+namespace RssReader.Migrations;
+
+/// <inheritdoc />
+public partial class MakeFeedTitleRequired : Migration
 {
     /// <inheritdoc />
-    public partial class MakeFeedTitleRequired : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
 
-        }
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
 
-        }
     }
 }
+

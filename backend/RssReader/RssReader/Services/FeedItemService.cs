@@ -235,7 +235,7 @@ public class FeedItemService(
     {
         int userId = currentUserService.UserId;
 
-        var feedItem = await feedItemRepository.GetByIdAsync(feedItemId, ct);
+        FeedItem? feedItem = await feedItemRepository.GetByIdAsync(feedItemId, ct);
         if (feedItem == null)
             throw new KeyNotFoundException($"Feed item with Id {feedItemId} was not found");
 

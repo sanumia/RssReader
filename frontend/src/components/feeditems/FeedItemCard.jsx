@@ -80,10 +80,18 @@ export default function FeedItemCard({ item }) {
                 >
                     {isFavorite ? '★ Favorited' : '☆ Favorite'}
                 </button>
-                <button className="ghost" onClick={() => setEditing(true)}>
+                <button 
+                    className="ghost" 
+                    onClick={() => setEditing(true)}
+                >
                     Edit
                 </button>
-                <button className="danger" onClick={handleDelete}>Delete</button>
+                <button 
+                    className="danger" 
+                    onClick={handleDelete}
+                >
+                        Delete
+                </button>
             </div>
         </div>
     );

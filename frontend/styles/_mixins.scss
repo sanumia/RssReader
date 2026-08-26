@@ -1,0 +1,9 @@
+@mixin icon-image($width: 100%, $height: auto) {
+    width: $width;
+    height: $height;
+    object-fit: contain;
+    border-radius: 8px;
+    background: #f0f1f3;
+    border: 1px solid #e2e5ea;
+    flex-shrink: 0;
+}

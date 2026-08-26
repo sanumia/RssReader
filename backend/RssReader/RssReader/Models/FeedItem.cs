@@ -8,8 +8,9 @@ public class FeedItem
     public int FeedId { get; set; }
     public Feed Feed { get; set; } = null!;
 
+    [Required(AllowEmptyStrings = false)]
     [StringLength(200)]
-    public required string Title { get; set; } = string.Empty;
+    public string Title { get; set; } = string.Empty;
 
     public string? Description { get; set; }
     public string Link { get; set; } = string.Empty;

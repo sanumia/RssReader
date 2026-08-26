@@ -32,7 +32,8 @@ public class RssReaderDbContext(DbContextOptions<RssReaderDbContext> options) : 
         modelBuilder.Entity<UserFeed>()
             .HasOne(uf => uf.Feed)
             .WithMany(f => f.UserFeeds)
-            .HasForeignKey(uf => uf.FeedId);
+            .HasForeignKey(uf => uf.FeedId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<UserFeedItem>()
             .HasKey(ufi => new { ufi.UserId, ufi.FeedItemId });
@@ -67,7 +68,8 @@ public class RssReaderDbContext(DbContextOptions<RssReaderDbContext> options) : 
         modelBuilder.Entity<FeedFolder>()
             .HasOne(ff => ff.Feed)
             .WithMany(f => f.FeedFolders)
-            .HasForeignKey(ff => ff.FeedId);
+            .HasForeignKey(ff => ff.FeedId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<FeedFolder>()
             .HasOne(ff => ff.Folder)

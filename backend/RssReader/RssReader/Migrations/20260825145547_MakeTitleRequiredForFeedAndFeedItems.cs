@@ -5,19 +5,22 @@
 namespace RssReader.Migrations;
 
 /// <inheritdoc />
-public partial class MakeTitleRequired : Migration
+public partial class MakeTitleRequiredForFeedAndFeedItems : Migration
 {
     /// <inheritdoc />
     protected override void Up(MigrationBuilder migrationBuilder)
     {
         migrationBuilder.AlterColumn<string>(
             name: "Title",
-            table: "FeedItems",
+            table: "Feeds",
             type: "nvarchar(200)",
             maxLength: 200,
             nullable: false,
+            defaultValue: "",
             oldClrType: typeof(string),
-            oldType: "nvarchar(max)");
+            oldType: "nvarchar(200)",
+            oldMaxLength: 200,
+            oldNullable: true);
     }
 
     /// <inheritdoc />
@@ -25,9 +28,10 @@ public partial class MakeTitleRequired : Migration
     {
         migrationBuilder.AlterColumn<string>(
             name: "Title",
-            table: "FeedItems",
-            type: "nvarchar(max)",
-            nullable: false,
+            table: "Feeds",
+            type: "nvarchar(200)",
+            maxLength: 200,
+            nullable: true,
             oldClrType: typeof(string),
             oldType: "nvarchar(200)",
             oldMaxLength: 200);

@@ -40,17 +40,20 @@ export default function Dashboard() {
     const handleDeleteItem = (id) => {
         if (window.confirm('Remove this item?')) {
             dispatch(removeItem(id));
+            dispatch(getAllFeeds());
         }
     };
 
     return (
         <div className="dashboard">
-            {!isAuthenticated && (
+            {
+                !isAuthenticated && (
                     <p className="dashboard__empty">
                         <Link to="/login">Log in</Link> or{' '}
                         <Link to="/register">create an account</Link> to add and manage your own feeds.
                     </p>
-                )}
+                )
+            }
             <section className="dashboard__section">
                 <div className="dashboard__section-header">
                     <h2 className="dashboard__title">Feeds</h2>
@@ -66,12 +69,12 @@ export default function Dashboard() {
                 </div>
 
                 {
-                    isAuthenticated && isEditing
+                    isAuthenticated 
+                    && isEditing
                     && (
                         <FeedForm
                             editingFeed={editingFeed === 'new' ? null : editingFeed}
-                            onDone={() => 
-                                setEditingFeed(null)}
+                            onDone={() => setEditingFeed(null)}
                         />
                     )
                 }
@@ -97,8 +100,9 @@ export default function Dashboard() {
                             onEdit={setEditingFeed}
                             onDelete={deleteFeed}
                             canManage={isAuthenticated}
-                        />
-                ))}
+                        />)
+                    )
+                }
             </section>
 
             <section className="dashboard__section">

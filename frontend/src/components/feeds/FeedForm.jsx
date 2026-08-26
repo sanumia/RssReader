@@ -12,7 +12,7 @@ export default function FeedForm({ editingFeed, onDone }) {
     const [error, setError] = useState(null);
     const isEditing = !!editingFeed;
 
-    const handleSubmit =useCallback(async (e) => {
+    const handleSubmit =  useCallback(async (e) => {
         e.preventDefault();
         if (submitting) return;
         setSubmitting(true);

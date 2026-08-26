@@ -7,8 +7,9 @@ public class Feed
     public int Id { get; set; }
     public string Url { get; set; } = string.Empty;
 
+    [Required(AllowEmptyStrings = false)]
     [StringLength(200)]
-    public required string? Title { get; set; }
+    public string Title { get; set; } = string.Empty;
 
     public string? Description { get; set; }
     public DateTime LastUpdated { get; set; }

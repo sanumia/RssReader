@@ -58,6 +58,7 @@ public class FeedController(IFeedService feedService) : ControllerBase
     public async Task<IActionResult> GetAllFeedsWithUserInfo(CancellationToken ct)
     {
         var result = await feedService.GetAllFeedsWithUserInfoAsync(ct);
+
         return Ok(result);
     }
 }

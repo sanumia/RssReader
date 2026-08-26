@@ -77,10 +77,16 @@ public class FeedService(
 
     public async Task RemoveFeedAsync(int feedId, CancellationToken ct = default)
     {
-        var isSubscribe = await feedRepository.UserIsSubscribedAsync(currentUserService.UserId, feedId, ct);
+        var userId = currentUserService.UserId;
+        var isSubscribe = await feedRepository.UserIsSubscribedAsync(userId, feedId, ct);
         if (isSubscribe)
         {
+            int subscriberCount = await feedRepository.GetSubscriberCountAsync(feedId, ct);
             await feedRepository.UnsubscribeUserFromFeedAsync(currentUserService.UserId, feedId, ct);
+            if (subscriberCount == 1)
+            {
+                await feedRepository.DeleteFeedAsync(feedId, ct);
+            }
             await unitOfWork.CommitAsync(ct);
         }
         else

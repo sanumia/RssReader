@@ -1,6 +1,6 @@
 import { login, clearAuthError } from 'Actions/authActions';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 
 const FormStatus = Object.freeze({
@@ -13,20 +13,20 @@ export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = useCallback((e) => {
         e.preventDefault();
         dispatch(login({ email, password }));
-    }
+    }, [dispatch, email, password]);
 
-    const handleEmailChange = (e) => {
+    const handleEmailChange = useCallback((e) => {
         setEmail(e.target.value);
         if (error) dispatch(clearAuthError());
-    };
+    }, [error, dispatch]);
 
-    const handlePasswordChange = (e) => {
+    const handlePasswordChange = useCallback((e) => {
         setPassword(e.target.value);
         if (error) dispatch(clearAuthError());
-    };
+    }, [error, dispatch]);
 
     if(isAuthenticated) {
         return (

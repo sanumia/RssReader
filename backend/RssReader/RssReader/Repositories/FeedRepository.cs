@@ -99,4 +99,20 @@ public class FeedRepository(RssReaderDbContext context) : BaseRepository<Feed>(c
             })
             .ToListAsync(ct);
     }
+
+    public async Task<int> GetSubscriberCountAsync(int feedId, CancellationToken ct = default)
+    {
+        return await context.UserFeeds
+            .CountAsync(uf => uf.FeedId == feedId, ct);
+    }
+
+    public async Task DeleteFeedAsync(int feedId, CancellationToken ct = default)
+    {
+        var feed = await GetByIdAsync(feedId, ct);
+
+        if (feed == null)
+            throw new KeyNotFoundException($"Feed with id {feedId} not found");
+
+        context.Feeds.Remove(feed);
+    }
 }

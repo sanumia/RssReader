@@ -75,6 +75,7 @@ public class FeedItemController(IFeedItemService feedItemService) : ControllerBa
     public async Task<IActionResult> UpdateFeedItem(int itemId, UpdateFeedItemDto updateDto, CancellationToken ct)
     {
         var updated = await feedItemService.UpdateFeedItemAsync(itemId, updateDto, ct);
+
         return Ok(updated);
     }
 }
