@@ -1,7 +1,10 @@
+import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import React from 'react'
 const IMAGE_SIZE = 20;
 
-export default function FeedListItem({ feed, onEdit, onDelete }) {
+
+export default function FeedListItem({ feed, onEdit, onDelete, canManage }) {
     const {
         id,
         title,
@@ -17,6 +20,16 @@ export default function FeedListItem({ feed, onEdit, onDelete }) {
     const handleCardClick = () => {
         navigate(`/feeds/${feed.id}`);
     };
+
+    const handleEditClick = useCallback( (e) => {
+        e.stopPropagation();
+        onEdit(feed);
+    }, [feed, onEdit]);
+
+    const handleDeleteClick = useCallback((e) => {
+        e.stopPropagation();
+        onDelete(id);
+    }, [id, onDelete]);
 
     return (
         <div 
@@ -35,10 +48,14 @@ export default function FeedListItem({ feed, onEdit, onDelete }) {
                 )
             }
             <span className="feed-item__title">{title}</span>
-            <span className="feed-item__category">{folders}</span>
-            <span className="feed-item__count">{feedItemCount} news</span>
-            <button onClick={() => onEdit(feed)}>Edit</button>
-            <button onClick={() => onDelete(id)}>Delete</button>
+            {
+                canManage && (
+                    <React.Fragment>
+                        <button onClick={handleEditClick}>Edit</button>
+                        <button onClick={handleDeleteClick}>Delete</button>
+                    </React.Fragment>
+                )
+            }
         </div>
     );
 }

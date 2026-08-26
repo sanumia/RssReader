@@ -1,6 +1,6 @@
-import { login } from 'Actions/authActions';
+import { login, clearAuthError } from 'Actions/authActions';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 
 const FormStatus = Object.freeze({
@@ -13,10 +13,20 @@ export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = useCallback((e) => {
         e.preventDefault();
         dispatch(login({ email, password }));
-    }
+    }, [dispatch, email, password]);
+
+    const handleEmailChange = useCallback((e) => {
+        setEmail(e.target.value);
+        if (error) dispatch(clearAuthError());
+    }, [error, dispatch]);
+
+    const handlePasswordChange = useCallback((e) => {
+        setPassword(e.target.value);
+        if (error) dispatch(clearAuthError());
+    }, [error, dispatch]);
 
     if(isAuthenticated) {
         return (
@@ -33,14 +43,14 @@ export default function Login() {
                 <input 
                     type="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={handleEmailChange}
                     placeholder="Email"
                     required 
                 />
                 <input 
                     type="password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={handlePasswordChange}
                     placeholder="Password"
                     required 
                 />

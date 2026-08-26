@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getFeeds, removeFeed } from 'Actions/feedsActions';
+import { getAllFeedsWithUserInfo, removeFeed } from 'Actions/feedsActions';
 import FeedForm from 'Components/feeds/FeedForm';
 import { getFolders } from 'Reducers/foldersReducer';
 import AddToFolderButton from 'Components/feeds/AddToFolderButton';
@@ -12,15 +12,21 @@ export default function Feeds() {
     const [editingFeed, setEditingFeed] = useState(null);
 
     useEffect(() => {
-        dispatch(getFeeds());
+        dispatch(getAllFeedsWithUserInfo());
         dispatch(getFolders());
     }, [dispatch]);
 
     const handleDelete = (id) => {
         if (window.confirm('Delete this feed and all its items?')) {
-            dispatch(removeFeed(id));
+            dispatch(removeFeed(id)).then(() => {
+            dispatch(getAllFeedsWithUserInfo());
+        });
         }
     };
+
+    const handleEdit = useCallback(() => {
+        setEditingFeed(feed);
+    }, [feed]);
 
     return (
         <div className="page">
@@ -65,11 +71,17 @@ export default function Feeds() {
                         <Link to={`/feeds/${feed.id}`} className="feed-item__title">
                             {feed.title || feed.url}
                         </Link>
-                        <span className="feed-item__count">{feed.totalNewsCount ?? 0} news</span>
+                        <span className="feed-item__count">{feed.feedItemCount ?? 0} news</span>
                         <div className="feed-item__actions">
                             <AddToFolderButton feedId={feed.id} />
-                            <button className="ghost" onClick={() => setEditingFeed(feed)}>Edit</button>
-                            <button className="danger" onClick={() => handleDelete(feed.id)}>Delete</button>
+                            {
+                                feed.isSubscribed && (
+                                    <>
+                                        <button className="ghost" onClick={handleEdit}>Edit</button>
+                                        <button className="danger" onClick={() => handleDelete(feed.id)}>Delete</button>
+                                    </>
+                                )
+                            }
                         </div>
                     </div>
                 ))}

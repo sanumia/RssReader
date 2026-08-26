@@ -1,18 +1,21 @@
 import { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { addFeed, editFeed } from 'Actions/feedsActions';
-import { getFeeds } from '../../reducers/feedsReducer';
+import { getFeeds } from 'Actions/feedsActions';
 
 export default function FeedForm({ editingFeed, onDone }) {
     const dispatch = useDispatch();
     const [url, setUrl] = useState(editingFeed?.url || '');
     const [title, setTitle] = useState(editingFeed?.title || '');
     const [iconUrl, setIconUrl] = useState(editingFeed?.iconUrl || '');
+    const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState(null);
     const isEditing = !!editingFeed;
 
-    const handleSubmit =useCallback(async (e) => {
+    const handleSubmit =  useCallback(async (e) => {
         e.preventDefault();
+        if (submitting) return;
+        setSubmitting(true);
         setError(null);
 
         const feedData = {
@@ -37,7 +40,8 @@ export default function FeedForm({ editingFeed, onDone }) {
         } else {
             setError(result.payload || 'Something went wrong');
         }
-    }, [editingFeed, onDone]);
+        setSubmitting(false);
+    }, [editingFeed, url, title, iconUrl, isEditing, editingFeed, submitting, onDone]);
 
     return (
         <form className="form-row" onSubmit={handleSubmit}>

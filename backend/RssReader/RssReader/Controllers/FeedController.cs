@@ -13,6 +13,7 @@ namespace RssReader.Controllers;
 [Route("api/feeds")]
 public class FeedController(IFeedService feedService) : ControllerBase
 {
+    [AllowAnonymous]
     [HttpGet("all")]
     public async Task<IActionResult> GetAllFeedsAsync(CancellationToken ct)
     {
@@ -51,5 +52,13 @@ public class FeedController(IFeedService feedService) : ControllerBase
         await feedService.RemoveFeedAsync(feedId, ct);
         
         return NoContent();
+    }
+
+    [HttpGet("all-user")]
+    public async Task<IActionResult> GetAllFeedsWithUserInfo(CancellationToken ct)
+    {
+        var result = await feedService.GetAllFeedsWithUserInfoAsync(ct);
+
+        return Ok(result);
     }
 }

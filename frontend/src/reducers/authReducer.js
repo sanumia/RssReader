@@ -18,7 +18,7 @@ export const login = createAsyncThunk(
             localStorage.setItem('token', response.data.token);
             return response.data;
         } catch (err) {
-            return rejectWithValue(err.response?.data?.message || err.message);
+            return rejectWithValue(err.response?.data?.detail || err.message);
         }
     }
 );
@@ -33,7 +33,7 @@ export const register = createAsyncThunk(
             return response.data;
         }
         catch (err) {
-            return rejectWithValue(err.response?.data?.message || err.message);
+            return rejectWithValue(err.response?.data?.detail || err.message);
         }
     }
 );

@@ -1,11 +1,14 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { markItemRead, toggleItemFavorite, removeItem } from 'Actions/feedItemsActions';
-import { useCallback } from 'react';
+import { useState, useCallback } from 'react';
+import FeedItemForm from 'Components/feeditems/FeedItemForm';
 
 export default function FeedItemCard({ item }) {
     const dispatch = useDispatch();
-
+    const navigate = useNavigate();
+    const [editing, setEditing] = useState(false);
+    
     const {
         id,
         title,
@@ -15,9 +18,15 @@ export default function FeedItemCard({ item }) {
         isFavorite
     } = item;
 
-    const handleDelete = () => {
-        if (window.confirm('Remove this item?')) dispatch(removeItem(item.id));
-    };
+    const handleDelete = useCallback(async () => {
+        if (!window.confirm('Remove this item?')) return;
+        try {
+            await dispatch(removeItem(id)).unwrap();
+            navigate('/'); // only after successful deletion
+        } catch (err) {
+            console.error('Delete failed:', err);
+        }
+    }, [dispatch, id, navigate]);
 
     const onMarkReadClick = useCallback(() => {
         dispatch(markItemRead({
@@ -27,11 +36,15 @@ export default function FeedItemCard({ item }) {
     },[dispatch, id, isRead]);
     
     const onMarkFavoriteClick = useCallback(() => {
-        dispatch(markItemFavorite({
+        dispatch(toggleItemFavorite({
             itemId: id, 
             isFavorite: !isFavorite
         }))
     },[dispatch, id, isFavorite]);
+
+    const handleEditDone = () => {
+        setEditing(false);
+    };
 
     return (
         <div className="item-card">
@@ -45,6 +58,15 @@ export default function FeedItemCard({ item }) {
             )}
             <Link to={`/feed-items/${id}`}><h3>{title}</h3></Link>
             <p>{description}</p>
+            {
+                editing && (
+                    <FeedItemForm
+                        feedId={item.feedId}
+                        initialData={item}
+                        onDone={handleEditDone}
+                    />
+                )
+            }
             <div className="item-card__actions">
                 <button
                     className="ghost"
@@ -58,7 +80,18 @@ export default function FeedItemCard({ item }) {
                 >
                     {isFavorite ? '★ Favorited' : '☆ Favorite'}
                 </button>
-                <button className="danger" onClick={handleDelete}>Delete</button>
+                <button 
+                    className="ghost" 
+                    onClick={() => setEditing(true)}
+                >
+                    Edit
+                </button>
+                <button 
+                    className="danger" 
+                    onClick={handleDelete}
+                >
+                        Delete
+                </button>
             </div>
         </div>
     );

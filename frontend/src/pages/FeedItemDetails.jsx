@@ -25,7 +25,7 @@ export default function FeedItemDetails() {
     const onMarkFavoriteClick = useCallback(() => {
         dispatch(toggleItemFavorite({
             itemId: item.id,
-            isFavorite: item.isFavorite
+            isFavorite: !item.isFavorite
         }))
     }, [dispatch, item])
 

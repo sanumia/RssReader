@@ -16,16 +16,13 @@ export default function FeedItemsByFeed() {
 
     useEffect(() => {
         dispatch(getItemsByFeedGrouped({ feedId: Number(feedId) }));
-        if (feeds.length === 0) {
-            dispatch(getFeeds());
-        }
     }, [dispatch, feedId]);
 
     const sections = [
-        ['Today', grouped?.today],
-        ['Yesterday', grouped?.yesterday],
-        ['Last 7 Days', grouped?.lastWeek],
-        ['Older', grouped?.older],
+        ['Today', grouped?.Today],
+        ['Yesterday', grouped?.Yesterday],
+        ['Last 7 Days', grouped?.LastWeek],
+        ['Older', grouped?.Older],
     ];
 
     const handleFormDone = () => {

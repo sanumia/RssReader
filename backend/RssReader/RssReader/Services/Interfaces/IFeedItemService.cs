@@ -23,4 +23,5 @@ public interface IFeedItemService
     Task ChangeFavoriteStatusAsync(int feedItemId, bool isFavorite, CancellationToken ct = default);
     Task RemoveFeedItemAsync(int feedItemId, CancellationToken ct = default);
     Task<FeedItemDto> CreateFeedItemAsync(int feedId, CreateFeedItemDto createFeedItemDto, CancellationToken ct = default);
+    Task<FeedItemDto> UpdateFeedItemAsync(int feedId, UpdateFeedItemDto updateFeedItemDto, CancellationToken ct = default);
 }

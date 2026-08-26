@@ -127,6 +127,19 @@ export const getItem = createAsyncThunk(
     }
 )
 
+export const updateFeedItem = createAsyncThunk(
+    'feedItems/updateFeedItem',
+    async ({ itemId, updates }, { rejectWithValue }) => {
+        try {
+            const response = await api.put(urls.UPDATE_ITEM_URL(itemId), updates);
+            
+            return response.data;
+        } catch (err) {
+            return rejectWithValue(err.response?.data?.message || err.message);
+        }
+    }
+);
+
 const feedItemsSlice = createSlice({
     name: 'feedItems',
     initialState: {
@@ -175,10 +188,18 @@ const feedItemsSlice = createSlice({
             .addCase(markItemRead.fulfilled, (state, action) => {
                 const item = state.list.find((i) => i.id === action.payload.itemId);
                 if (item) item.isRead = action.payload.isRead;
+
+                if (state.currentItem?.id === action.payload.itemId) {
+                    state.currentItem.isRead = action.payload.isRead;
+                }
             })
             .addCase(toggleItemFavorite.fulfilled, (state, action) => {
                 const item = state.list.find((i) => i.id === action.payload.itemId);
                 if (item) item.isFavorite = action.payload.isFavorite;
+
+                if (state.currentItem?.id === action.payload.itemId) {
+                    state.currentItem.isFavorite = action.payload.isFavorite;
+                }
             })
             .addCase(removeItem.fulfilled, (state, action) => {
                 state.list = state.list.filter((i) => i.id !== action.payload);
@@ -215,6 +236,39 @@ const feedItemsSlice = createSlice({
             .addCase(getItem.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
+            })
+            .addCase(updateFeedItem.fulfilled, (state, action) => {
+                const updated = action.payload;
+                const index = state.list.findIndex((i) => i.id === updated.id);
+                if (index !== -1) state.list[index] = updated;
+
+                if (state.grouped) {
+                    for (const key of ['today', 'yesterday', 'lastWeek', 'older']) {
+                        const group = state.grouped[key];
+                        if (group) {
+                            const idx = group.findIndex((i) => i.id === updated.id);
+                            if (idx !== -1) {
+                                group[idx] = updated;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (state.currentItem?.id === updated.id) {
+                    state.currentItem = updated;
+                }
+
+                state.loading = false;
+                state.error = null;
+            })
+            .addCase(updateFeedItem.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+            .addCase(updateFeedItem.pending, (state) => {
+                state.loading = true;
+                state.error = null;
             });
     },
 });

@@ -14,5 +14,7 @@ public interface IFeedRepository : IBaseRepository<Feed>
     Task SubscribeUserToFeedAsync(int userId, int feedId, CancellationToken ct = default);
     Task UnsubscribeUserFromFeedAsync(int userId, int feedId, CancellationToken ct = default);
     Task<List<DashboardFeedDto>> GetDashboardFeedsAsync(int userId, CancellationToken ct = default);
-
+    Task<List<FeedGlobalDto>> GetAllFeedsWithUserInfoAsync(int userId, CancellationToken ct = default);
+    Task<int> GetSubscriberCountAsync(int feedId, CancellationToken ct = default);
+    Task DeleteFeedAsync(int feedId, CancellationToken ct = default);
 }

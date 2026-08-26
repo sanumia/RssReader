@@ -1,10 +1,16 @@
-﻿ namespace RssReader.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace RssReader.Models;
 
 public class Feed
 {
     public int Id { get; set; }
     public string Url { get; set; } = string.Empty;
-    public string? Title { get; set; }
+
+    [Required(AllowEmptyStrings = false)]
+    [StringLength(200)]
+    public string Title { get; set; } = string.Empty;
+
     public string? Description { get; set; }
     public DateTime LastUpdated { get; set; }
     public bool IsActive { get; set; } = true;

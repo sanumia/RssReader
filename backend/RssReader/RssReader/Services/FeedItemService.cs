@@ -227,4 +227,27 @@ public class FeedItemService(
 
         return mapper.Map<FeedItemDto>(feedItem);
     }
+
+    public async Task<FeedItemDto> UpdateFeedItemAsync(
+        int feedItemId,
+        UpdateFeedItemDto updateDto,
+        CancellationToken ct = default)
+    {
+        int userId = currentUserService.UserId;
+
+        FeedItem? feedItem = await feedItemRepository.GetByIdAsync(feedItemId, ct);
+        if (feedItem == null)
+            throw new KeyNotFoundException($"Feed item with Id {feedItemId} was not found");
+
+        mapper.Map(updateDto, feedItem);
+
+        await feedItemRepository.UpdateAsync(feedItem, ct);
+        await unitOfWork.CommitAsync(ct);
+
+        return await feedItemRepository
+            .GetSingleQuery(feedItemId)
+            .Select(ToDtoPersonal(userId))
+            .FirstOrDefaultAsync(ct)
+            ?? throw new KeyNotFoundException("Failed to retrieve updated item");
+    }
 }

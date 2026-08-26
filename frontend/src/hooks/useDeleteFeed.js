@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux';
+import { removeFeed } from 'Actions/feedsActions';
 
 
 export function useDeleteFeed() {
